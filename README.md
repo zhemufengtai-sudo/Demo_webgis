@@ -18,7 +18,7 @@
 4.GeoModelServiceContainer -- Zhang, F., Chen, M., Ames, D. P., Shen, C., Yue, S., Wen, Y., & Lü, G. (2019). Design and development of a service-oriented wrapper system for sharing and reusing distributed geoanalysis models on the web. Environmental modelling & software, 111, 498-509.<br>
 
 
-#**如何打开项目？**
+# **如何打开项目？**
 1. 在GeoModelServiceContainer当中，利用npm 先安装对应package；然后基于 node .\bin\www 或者编写lauch.json进行调式（vscode）<br>
 2. 打开python底下的app.py 通过 "uv run fastAPI dev app.py"打开端口;（**可以自己设定端口 默认为8000**）<br>
 3. SCS 以及 LST 文件夹为部署到本地的模型。进入到模型容器当中，根据教学(https://gitee.com/geomodeling/GeoModelServiceContainer#introduction)可以自行部署
