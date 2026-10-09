@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deployment</title>
+    <link rel="stylesheet" href="/css/jquery.stepy.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/blueimp-gallery.min.css">
+
+    <!--file upload-->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-fileupload.min.css" />
+
+    <%- include headInclude.ejs %>
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+
+        <div id="ModelSerDeployment" ></div>
+
+        <%- include footer.ejs %>
+    </div>
+</section>
+
+<%- include footerInclude.ejs %>
+
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/jquery.stepy.js"></script>
+
+<!--file upload-->
+<script type="text/javascript" src="/js/bootstrap-fileupload.min.js"></script>
+<script type="text/javascript" src="/js/treeview/js/bootstrap-treeview.js"></script>
+<!--bootstrap input mask-->
+<script type="text/javascript" src="/js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+
+</body>
+</html>

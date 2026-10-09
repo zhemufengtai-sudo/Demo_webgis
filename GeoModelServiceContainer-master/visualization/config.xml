@@ -1,0 +1,6 @@
+<VisualizationMethod name="" author="" email="" >
+	<DataTemplates>
+		<Item format="FILE|GeoJSON" type="Polygon" content="*" ></Item>
+		<Item format="FILE|GeoJSON" type="Polyline" content="Contour Line" ></Item>
+	</DataTemplates>
+</VisualizationMethod>

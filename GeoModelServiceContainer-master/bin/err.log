@@ -1,0 +1,30 @@
+
+undefined:1
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN""http://www.w3.org/TR/html4/s
+^
+SyntaxError: Unexpected token <
+    at Object.parse (native)
+    at IncomingMessage.<anonymous> (E:\NodeJS\ComputerRes\control\remoteReqControl.js:32:29)
+    at IncomingMessage.emit (events.js:95:17)
+    at IncomingMessage.<anonymous> (_stream_readable.js:765:14)
+    at IncomingMessage.emit (events.js:92:17)
+    at emitReadable_ (_stream_readable.js:427:10)
+    at emitReadable (_stream_readable.js:423:5)
+    at readableAddChunk (_stream_readable.js:166:9)
+    at IncomingMessage.Readable.push (_stream_readable.js:128:10)
+    at HTTPParser.parserOnBody [as onBody] (http.js:143:22)
+
+undefined:1
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN""http://www.w3.org/TR/html4/s
+^
+SyntaxError: Unexpected token <
+    at Object.parse (native)
+    at IncomingMessage.<anonymous> (E:\NodeJS\ComputerRes\control\remoteReqControl.js:32:29)
+    at IncomingMessage.emit (events.js:95:17)
+    at IncomingMessage.<anonymous> (_stream_readable.js:765:14)
+    at IncomingMessage.emit (events.js:92:17)
+    at emitReadable_ (_stream_readable.js:427:10)
+    at emitReadable (_stream_readable.js:423:5)
+    at readableAddChunk (_stream_readable.js:166:9)
+    at IncomingMessage.Readable.push (_stream_readable.js:128:10)
+    at HTTPParser.parserOnBody [as onBody] (http.js:143:22)

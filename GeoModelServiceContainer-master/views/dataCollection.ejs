@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%=global.LanguageConfig.Heading.DataCache %></title>
+    <%- include headInclude.ejs %>
+    <!--dynamic table-->
+    <link href="/css/ol.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/ol3-layerswitcher.css" />
+    <link href="/js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+    <link href="/js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css" />
+
+    <link href="/css/uploadfile.css" rel="stylesheet" />
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+        <section class="panel" >
+            <header class="panel-heading">
+                <%=global.LanguageConfig.Heading.DataCache %>
+            </header>
+            <div id="dataCollectionTable" class="panel-body">
+
+            </div>
+            <div id="dataUploader" class="panel-body">
+
+            </div>
+        </section>
+        <%- include footer.ejs %>
+    </div>
+</section>
+
+<%- include footerInclude.ejs %>
+<script src="/js/polyfill.min.js"></script>
+<script src="/js/ol.js"></script>
+<script src="/js/ol3-layerswitcher.js"></script>
+<script src="/js/proj4.js"></script>
+
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+<!--dynamic table initialization -->
+<!--<script src="/js/dynamic_table_init.js"></script>-->
+<script type="text/javascript" src="/js/chart-js/highcharts.js"></script>
+<script type="text/javascript" src="/js/chart-js/highcharts-more.js"></script>
+<script type="text/javascript" src="/js/chart-js/solid-gauge.js"></script>
+<script type="text/javascript" src="/js/chart-js/exporting.js"></script>
+<script type="text/javascript" src="/js/chart-js/data.js"></script>
+<script src="/js/output/bundle.js" ></script>
+<script type="text/javascript" src="/js/jquery.form.js"></script>
+<script type="text/javascript" src="/js/jquery.uploadfile.min.js" ></script>
+<script type="text/javascript" src="/js/geomodel/modelser.js" ></script>
+</body>
+</html>

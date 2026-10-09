@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet">
+    <style type="text/css">
+        .error{
+            background:url('/images/alert.png') no-repeat 0 2px;
+            padding-left: 20px;
+            margin-right: 30px ;
+            color:#DE5130;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body class="login-body">
+    <div class="container">
+        <div class="form-signin-heading text-center" >
+            <h1 class="sign-title">模型服务调用 - 用户登录</h1>
+            <img src="/images/login-logo.png" style="padding-top: 100px;" alt=""/>
+        </div>
+        <form class="form-signin" id="form" method="POST" style="margin-top: 35px;margin-bottom: 5px">
+            <div class="login-wrap" style="padding-top: 50px">
+                <input type="text" id="username" name="username" class="form-control" placeholder="用户名" autofocus>
+                <input type="password" id="pwd" name="pwd" class="form-control" placeholder="密码">
+
+                <div id="error" style="color: #DE5130;font-size: 12px;font-weight: normal;"></div>
+
+                <button class="btn btn-lg btn-login btn-block" type="submit">
+                    <i class="fa fa-check"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModelClass name="ta_morphometry_13-Land_Surface_Temperature" uid="E0DE4D39-B251-43c5-97C9-9E2FC82A6355" type="ta_morphometry">
+    <AttributeSet>
+        <Categories>
+            <Category principle="SAGA" path="Terrain Analysis &gt; Morphometry"/>
+        </Categories>
+        <LocalAttributes>
+            <LocalAttribute local="EN_US" localName="Land Surface Temperature" wiki="">
+                <Keywords>Land Surface Temperature</Keywords>
+                <Abstract></Abstract>
+            </LocalAttribute>
+        </LocalAttributes>
+    </AttributeSet>
+    <Behavior>
+        <RelatedDatasets>
+            <DatasetItem name="Control" type="internal" description="SAGA Type:Control">
+                <UdxDeclaration name="" description="">
+    <UdxNode>
+        <UdxNode name="PARAMETERS_GRID_SYSTEM" type="DTKT_STRING" description="Name:Grid system.	Type:Grid system."/>
+        <UdxNode name="Z_REFERENCE" type="DTKT_STRING" description="Name:Elevation at Reference Station.	Type:Floating point.	Constraints:Default: 0.000000."/>
+        <UdxNode name="T_REFERENCE" type="DTKT_STRING" description="Name:Temperature at Reference Station.	Type:Floating point.	Description:Temperature at reference station in degree Celsius..	Constraints:Default: 0.000000."/>
+        <UdxNode name="T_GRADIENT" type="DTKT_STRING" description="Name:Lapse Rate.	Type:Floating point.	Description:Vertical temperature gradient in degree Celsius per 100 meter..	Constraints:Default: 0.600000."/>
+        <UdxNode name="C_FACTOR" type="DTKT_STRING" description="Name:C Factor.	Type:Floating point.	Constraints:Default: 1.000000."/>
+        <UdxNode name="LAI_MAX" type="DTKT_STRING" description="Name:Maximum LAI.	Type:Floating point.	Constraints:Minimum: 0.010000
+Default: 8.000000."/>
+    </UdxNode>
+    <SemanticAttachment>
+        <Concepts/>
+        <SpatialRefs/>
+        <Units/>
+        <DataTemplates/>
+    </SemanticAttachment>
+</UdxDeclaration>
+            </DatasetItem>
+            <DatasetItem name="Grid" type="internal" description="SAGA Type:Grid">
+                <UdxDeclaration name="" description="">
+    <UdxNode>
+        <UdxNode name="header" type="DTKT_ANY" description="header">
+            <UdxNode name="upper left corner X" type="DTKT_REAL" description="upper left corner X"/>
+            <UdxNode name="pixel width" type="DTKT_REAL" description="pixel width"/>
+            <UdxNode name="tansform param 1" type="DTKT_REAL" description="tansform param 1"/>
+            <UdxNode name="upper left corner Y" type="DTKT_REAL" description="upper left corner Y"/>
+            <UdxNode name="pixel height" type="DTKT_REAL" description="pixel height"/>
+            <UdxNode name="tansform param 2" type="DTKT_REAL" description="tansform param 2"/>
+            <UdxNode name="width" type="DTKT_INT" description="width"/>
+            <UdxNode name="height" type="DTKT_INT" description="height"/>
+            <UdxNode name="dataType" type="DTKT_STRING" description="dataType"/>
+        </UdxNode>
+        <UdxNode name="bands" type="DTKT_LIST" description="bands">
+            <UdxNode name="band" type="DTKT_ANY" description="band">
+                <UdxNode name="nodata" type="DTKT_REAL" description="nodata"/>
+                <UdxNode name="offset" type="DTKT_REAL" description="offset"/>
+                <UdxNode name="scale" type="DTKT_REAL" description="scale"/>
+                <UdxNode name="unit" type="DTKT_STRING" description="unit"/>
+                <UdxNode name="value" type="DTKT_LIST" description="nodata">
+                    <UdxNode name="line" type="DTKT_REAL" description="a line data of raster"/>
+                </UdxNode>
+            </UdxNode>
+        </UdxNode>
+        <UdxNode name="proj" type="DTKT_STRING" description="projection"/>
+    </UdxNode>
+    <SemanticAttachment>
+        <Concepts/>
+        <SpatialRefs/>
+        <Units/>
+        <DataTemplates/>
+    </SemanticAttachment>
+</UdxDeclaration>
+            </DatasetItem>
+        </RelatedDatasets>
+        <StateGroup>
+            <States>
+                <State id="D1FF1716-DF20-406d-AC5E-C36326468031" name="RUNSTATE" type="basic" description="Start Run">
+                    <Event name="DEM" type="response" description="Name:Elevation.	Type:Grid." optional="false">
+                        <ResponseParameter datasetReference="Grid" description=""/>
+                    </Event>
+                    <Event name="SWR" type="response" description="Name:Short Wave Radiation.	Type:Grid.	Description:[kW / m2]." optional="false">
+                        <ResponseParameter datasetReference="Grid" description=""/>
+                    </Event>
+                    <Event name="LAI" type="response" description="Name:Leaf Area Index.	Type:Grid." optional="false">
+                        <ResponseParameter datasetReference="Grid" description=""/>
+                    </Event>
+                    <Event name="LST" type="noresponse" description="Name:Land Surface Temperature.	Type:Grid." optional="false">
+                        <DispatchParameter datasetReference="Grid" description=""/>
+                    </Event>
+                    <Event name="Control" type="response" description="optional parameters" optional="true">
+                        <ControlParameter datasetReference="Control" description=""/>
+                    </Event>
+                </State>
+            </States>
+            <StateTransitions/>
+        </StateGroup>
+    </Behavior>
+    <Runtime name="saga_tool:Land Surface Temperature" version="1.0" baseDir="" entry="saga_model.exe">
+        <HardwareConfigures>
+            <INSERT name="cpu core numble">[2,infinite)</INSERT>
+            <INSERT name="disk avail size">[50GB,infinite)</INSERT>
+            <INSERT name="cpu frequency">[2.2GHz,infinite)</INSERT>
+            <INSERT name="memory size">[2GB,infinite)</INSERT>
+        </HardwareConfigures>
+        <SoftwareConfigures>
+            <INSERT name="VC++ Runtime" platform="x64">10</INSERT>
+            <INSERT name="Operating System" platform="x64">win 7||win 8||win 8.1||win 10||win xp</INSERT>
+        </SoftwareConfigures>
+        <Assemblies>
+            <Assembly name="GDALRasterMapping.exe" path="$(DataMappingPath)\GDALRasterMapping\"/>
+            <Assembly name="OGRVectorMapping.exe" path="$(DataMappingPath)\OGRVectorMapping\"/>
+        </Assemblies>
+        <SupportiveResources/>
+    </Runtime>
+</ModelClass>

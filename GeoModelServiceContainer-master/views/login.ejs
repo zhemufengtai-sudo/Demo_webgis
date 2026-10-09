@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>登录</title>
+    
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet">
+    <style type="text/css">
+        .error{
+            background:url('/images/alert.png') no-repeat 0 2px;
+            padding-left: 20px;
+            margin-right: 30px ;
+            color:#DE5130;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body class="login-body">
+    <div id="loginPanel" ></div>
+    <!-- <div class="container">
+        <div class="form-signin-heading text-center" >
+            <h1 class="sign-title">模型服务容器 - 登录</h1>
+            <img src="images/login-logo.png" style="padding-top: 100px;" alt=""/>
+        </div>
+        <form class="form-signin" id="form" action="/login" method="POST" style="margin-top: 35px;margin-bottom: 5px">
+            <div class="login-wrap" style="padding-top: 50px">
+                <input type="text" id="adminname" name="adminname" class="form-control" placeholder="用户名" autofocus>
+                <input type="password" id="adminpwd" name="adminpwd" class="form-control" placeholder="密码">
+
+                <div id="error" style="color: #DE5130;font-size: 12px;font-weight: normal;"></div>
+
+                <button class="btn btn-lg btn-login btn-block" type="submit">
+                    <i class="fa fa-check"></i>
+                </button>
+            </div>
+        </form>
+        <form id="form2">
+            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+                <div class="modal-dialog" id="form-div" style="max-width: 400px; margin: 100px auto; ">
+                    <div class="modal-content" style="border-radius: 10px; -webkit-border-radius: 10px;">
+                        <div class="modal-header" style="border-top-left-radius: 10px; -webkit-border-top-left-radius: 10px; border-top-right-radius: 10px; -webkit-border-top-right-radius: 10px;">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">重置密码</h4>
+                        </div>
+                        <div class="modal-body" style="padding-bottom: 5px;">
+                            <input type="text" id="nickName2" name="nickName" class="form-control" placeholder="用户名" autofocus style=" padding: 10px; margin-bottom: 15px;">
+                            <input type="email" id="email" name="email" class="form-control" placeholder="邮箱" style=" padding: 10px; margin-bottom: 5px;">
+
+                            <div id="error2" style="color: #DE5130;font-size: 12px;font-weight: normal;"></div>
+                        </div>
+                        <div class="modal-footer" style=" padding: 3px 5px 10px;width: 360px; margin: 0 auto; border: 0;">
+                            <button data-dismiss="modal" class="btn btn-default" type="button" style="float: left;">取消</button>
+                            <button class="btn btn-primary" type="submit" style="float: right;">提交</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <label class="checkbox" style="vertical-align: middle; margin: 0 auto; width: 320px;color: #e5dfd2;">
+            <input type="checkbox" id="rememberMe" name="rememberMe" value="remember-me" style="float: left;"> 记住密码
+            <span class="pull-right" style="float: right;">
+                 <a data-toggle="modal" href="#myModal" style="color: #d97400;">忘记密码？</a> 
+            </span>
+        </label>
+    </div> -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+
+</body>
+</html>

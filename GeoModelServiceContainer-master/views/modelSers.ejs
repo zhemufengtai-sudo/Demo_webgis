@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%=global.LanguageConfig.ModelServiceTable.localTitle %></title>
+    <%- include headInclude.ejs %>
+    <!--dynamic table-->
+    <link href="/js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+    <link href="/js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css" />
+</head>
+<body class="sticky-header">
+<section>
+    <!-- Header in the left -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- Navigate in the top -->
+        <%- include nav.ejs %>
+            <section class="panel" >
+                <header class="panel-heading">
+                    <%=global.LanguageConfig.Heading.LocalModelService.Title %> - <%=global.LanguageConfig.Heading.LocalModelService.Items %>&nbsp;&nbsp;&nbsp;&nbsp;
+                </header>
+                <div class="panel-body">
+                    <div class="panel-body">
+                        <div id="rmtModelSerTable" 
+                            data-source="/modelser/json/all?type=admin"
+                            data-type="admin" ></div>
+                    </div>
+                </div>
+            </section>
+        <%- include footer.ejs %>
+    </div>
+</section>
+
+<%- include footerInclude.ejs %>
+<script type="text/javascript" src="/js/geomodel/modelser.js" ></script>
+
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+</body>
+</html>

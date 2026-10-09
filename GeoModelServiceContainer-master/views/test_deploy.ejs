@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>部署测试</title>
+    </head>
+    <body>
+        <h1>服务模型部署</h1>
+        <form method="post" action="/modelser">
+            <input name="m_id" type="hidden" value="<%= model._id %>" />
+            模型名称：<a ><%= model.m_name %></a><br />
+            模型版本：<select name="mv_num" >
+                <% model.m_visions.forEach(function(item)
+                {
+                    %><option value="<%= item.mv_num %>" ><%= item.mv_num %></option><%
+                }); %>
+            </select><br />
+            描述信息：<textarea name="ms_des" ></textarea> <br />
+            自定义参数：<textarea name="ms_xml" ></textarea> <br />
+
+            <input type="submit" value="提交" />
+        </form>
+    </body>
+</html>

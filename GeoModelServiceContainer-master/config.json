@@ -1,0 +1,19 @@
+{
+    "port": "8060",
+    "portal": {
+        "host": "222.192.7.75",
+        "port": "80"
+    },
+    "mongodb": {
+        "host": "127.0.0.1",
+        "port": "27017"
+    },
+    "socket": {
+        "host": "127.0.0.1",
+        "port": "6001"
+    },
+    "manager": {
+        "host": "222.192.7.75",
+        "port": "80/managerServer"
+    }
+}

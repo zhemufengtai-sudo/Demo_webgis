@@ -1,0 +1,152 @@
+{
+    "_id": "6ac044629db9d19a8336bb94",
+    "ms_id": "6abe695f908157061dbee334",
+    "msr_ms": {
+        "_id": "6abe695f908157061dbee334",
+        "ms_model": {
+            "m_name": "SCS模型的降雨-径流关系模型",
+            "m_type": "VGE Model - Resource Environment Math Model",
+            "m_url": "",
+            "p_id": "47d19766e0696a5a6d574bca24f43eaa",
+            "m_id": null,
+            "m_register": false
+        },
+        "mv_num": "1.0",
+        "ms_des": "",
+        "ms_platform": 1,
+        "ms_update": "2026-10-01T14:08:31.161Z",
+        "ms_path": "SCS模型的降雨-径流关系模型_6abe695f908157061dbee334/",
+        "ms_img": null,
+        "ms_xml": "{\"ModelClass\":{\"$\":{\"name\":\"SCS模型的降雨-径流关系模型\",\"uid\":\"06f1f723-956f-445e-befd-00d357607d26\",\"type\":\"SimpleCalculation\"},\"AttributeSet\":{\"Categories\":{\"Category\":{\"$\":{\"principle\":\"Resource Environment Math Model\",\"path\":\"VGE Model\"}}},\"LocalAttributes\":{\"LocalAttribute\":[{\"$\":{\"local\":\"EN_US\",\"localName\":\"SCS模型的降雨-径流关系模型\",\"wiki\":\"\"},\"Keywords\":\"\",\"Abstract\":\"\"},{\"$\":{\"local\":\"ZH_CN\",\"localName\":\"SCS模型的降雨-径流关系模型\",\"wiki\":\"\"},\"Keywords\":\"\",\"Abstract\":\"\"}]}},\"Behavior\":{\"RelatedDatasets\":{\"DatasetItem\":[{\"$\":{\"name\":\"inputdata\",\"type\":\"internal\",\"description\":\"inputdata\"},\"UdxDeclaration\":{\"UDXNode\":{\"UDXNode\":[{\"$\":{\"name\":\"P\",\"type\":\"DTKT_REAL\",\"description\":\"一次降雨的降雨总量\"}},{\"$\":{\"name\":\"S\",\"type\":\"DTKT_REAL\",\"description\":\"流域当时的最大可能滞留量\"}}]}}},{\"$\":{\"name\":\"outputdata\",\"type\":\"internal\",\"description\":\"outputdata\"},\"UdxDeclaration\":{\"UDXNode\":{\"UDXNode\":{\"$\":{\"name\":\"double\",\"type\":\"DTKT_REAL\",\"description\":\"径流量\"}}}}}]},\"StateGroup\":{\"States\":{\"State\":[{\"$\":{\"id\":\"04fcb904-270c-4dba-8505-016004fe5d02\",\"name\":\"LOADDATA\",\"type\":\"basic\",\"description\":\"Model load data\"},\"Event\":{\"$\":{\"name\":\"inputdata\",\"type\":\"response\",\"description\":\"Load Input data\",\"optional\":0},\"ResponseParameter\":{\"$\":{\"datasetReference\":\"inputdata\",\"description\":\"\"}}}},{\"$\":{\"id\":\"84da3376-366f-45cf-b6d4-78a5d1ce7dd6\",\"name\":\"RETURNDATA\",\"type\":\"basic\",\"description\":\"Model start to running And Return data\"},\"Event\":{\"$\":{\"name\":\"Output\",\"type\":\"noresponse\",\"description\":\"Return output data\"},\"DispatchParameter\":{\"$\":{\"datasetReference\":\"outputdata\",\"description\":\"\"}}}}]},\"StateTransitions\":\"\"}},\"Runtime\":{\"$\":{\"name\":\"Resource Environment Math Model\",\"version\":\"1.0\",\"baseDir\":\"$(ModelServicePath)\\\\model\",\"entry\":\"YTX.exe\"},\"HardwareConfigures\":{\"Add\":{\"$\":{\"key\":\"Main Frequency\",\"value\":\"2.8\"}}},\"SoftwareConfigures\":{\"Add\":[{\"$\":{\"key\":\"Operation Platform\",\"value\":\"Windows\"}},{\"$\":{\"key\":\"Language Platform\",\"value\":\"C++ 2015\"}}]},\"Assemblies\":\"\\r\\n    \",\"SupportiveResources\":\"\\r\\n    \"}}}",
+        "ms_status": 1,
+        "ms_user": {
+            "u_name": "openGMS",
+            "u_email": "[Unknown]"
+        },
+        "ms_limited": 0,
+        "ms_permission": 0
+    },
+    "msr_datetime": "2026-10-3 7:55:14 AM",
+    "msr_span": 0.859,
+    "msr_user": {
+        "u_name": "[UNKNOWN]",
+        "u_ip": "127.0.0.1",
+        "u_type": 2
+    },
+    "msr_guid": "17b67bdc-9a83-4376-b56b-e247a103e5fa",
+    "msr_input": [
+        {
+            "StateId": "04fcb904-270c-4dba-8505-016004fe5d02",
+            "StateName": "LOADDATA",
+            "Event": "inputdata",
+            "DataId": "gd_b5fd6e10-bebc-11f1-a347-a73df009a02a",
+            "Destroyed": false,
+            "StateDes": "Model load data",
+            "Tag": "",
+            "Requested": true
+        }
+    ],
+    "msr_output": [
+        {
+            "StateId": "84da3376-366f-45cf-b6d4-78a5d1ce7dd6",
+            "StateName": "RETURNDATA",
+            "StateDes": "Model start to running And Return data",
+            "Event": "Output",
+            "Destroyed": false,
+            "Tag": "RETURNDATA-Output",
+            "DataId": "gd_b660ead0-bebc-11f1-a347-a73df009a02a",
+            "TimeData": []
+        }
+    ],
+    "msr_status": 1,
+    "msr_logs": [
+        {
+            "Type": "Initialize",
+            "State": "",
+            "Event": "",
+            "Flag": 1,
+            "Message": "",
+            "DateTime": "2026-10-02T23:55:14.251Z"
+        },
+        {
+            "Type": "EnterState",
+            "State": "LOADDATA",
+            "Event": "",
+            "Flag": 1,
+            "Message": "",
+            "DateTime": "2026-10-02T23:55:14.268Z"
+        },
+        {
+            "Type": "FireEvent",
+            "State": "LOADDATA",
+            "Event": "inputdata",
+            "Flag": 1,
+            "Message": "",
+            "DateTime": "2026-10-02T23:55:14.284Z"
+        },
+        {
+            "Type": "RequestData",
+            "State": "LOADDATA",
+            "Event": "inputdata",
+            "Flag": 1,
+            "Message": "Request data!",
+            "DateTime": "2026-10-02T23:55:14.299Z"
+        },
+        {
+            "Type": "LeaveState",
+            "State": "",
+            "Event": "",
+            "Flag": 1,
+            "Message": "",
+            "DateTime": "2026-10-02T23:55:14.316Z"
+        },
+        {
+            "Type": "EnterState",
+            "State": "RETURNDATA",
+            "Event": "",
+            "Flag": 1,
+            "Message": "",
+            "DateTime": "2026-10-02T23:55:14.329Z"
+        },
+        {
+            "Type": "FireEvent",
+            "State": "RETURNDATA",
+            "Event": "Output",
+            "Flag": 1,
+            "Message": "",
+            "DateTime": "2026-10-02T23:55:14.800Z"
+        },
+        {
+            "Type": "ResponseData",
+            "State": "RETURNDATA",
+            "Event": "Output",
+            "Flag": 1,
+            "Message": "Get data D:\\dev\\nodejs\\geo_model\\SCS模型的降雨-径流关系模型_6abe695f908157061dbee334\\instance\\17b67bdc-9a83-4376-b56b-e247a103e5fa\\\\res.xml!",
+            "DateTime": "2026-10-02T23:55:14.814Z"
+        },
+        {
+            "Type": "LeaveState",
+            "State": "",
+            "Event": "",
+            "Flag": 1,
+            "Message": "",
+            "DateTime": "2026-10-02T23:55:14.827Z"
+        },
+        {
+            "Type": "Finalize",
+            "State": "",
+            "Event": "",
+            "Flag": 1,
+            "Message": "",
+            "DateTime": "2026-10-02T23:55:14.843Z"
+        }
+    ],
+    "m_logs": [],
+    "msr_runninginfo": {
+        "InvokeErr": "",
+        "StdOut": "\"{Enter State Notified}\\n{Fire Event Notified}\\n{Request Data Notified}[OK]\\n{Leave State Notified}\\n{Enter State Notified}\\n{Fire Event Notified}\\n{Response Data Received}17b67bdc-9a83-4376-b56b-e247a103e5fa\\n{Leave State Notified}\\n{Finalize Notified}\\n\"",
+        "StdErr": ""
+    },
+    "msr_processparams": [],
+    "msr_controlparams": {}
+}

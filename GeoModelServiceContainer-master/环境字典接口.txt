@@ -1,0 +1,66 @@
+软硬件环境接口：
+	得到软硬件环境列表：
+	/setting/enviro
+		input:
+			type:software/hardware
+			method:get
+			AB:A
+		
+		output:
+			{
+				status:0/1,
+				enviro:[{		//软件环境：
+					name:String,
+					version:String,
+					publisher:String,
+					type:String,
+					platform:String,
+					alias:Array
+				}],
+				enviro:[{		//硬件环境
+					name:String,
+					value:String
+				}]
+			}
+	
+	查看软硬件环境匹配结果：
+	/setting/enviro/matching
+		input:
+			type:software/hardware
+			demands:
+				软件：
+					[{
+						name:String,
+						platform:String,	//可选
+						version:String
+					},...,{}]
+				硬件：
+					[{
+						name:String,
+						value:String
+					},...,{}]
+				
+		output:
+			{
+				status:0/1,
+				unSatisfiedList:[{		//软件环境
+					name:String,
+					version:String,
+					platform:String,
+					detail:{
+						name:Boolean,
+						verison:Boolean,
+						platform:Boolean,
+						valid:Boolean
+					}
+				}],
+				unSatisfiedList:[{
+					name:String,
+					value:String,
+					detail:{
+						name:Boolean,
+						value:Boolean,
+						valid:Boolean
+					}
+				}]
+			}

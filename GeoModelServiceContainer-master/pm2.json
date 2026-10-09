@@ -1,0 +1,36 @@
+{
+    "apps": [
+        {
+            "name": "ModelServiceContainer",
+            "script": "./bin/www",
+            "cwd": "./",
+            "args": [
+                "1"
+            ],
+            "node_args": "--harmony",
+            "watch": true,
+            "ignore_watch": [
+                "node_modules",
+                "logs",
+                "geo_data",
+                "geo_model",
+                "helper",
+                ".vscode",
+                ".git",
+                ".gitignore"
+            ],
+            "exec_mode": "cluster_mode",
+            "instances": 2,
+            "max_memory_restart": "2G",
+            "error_file": "./logs/app-error.log",
+            "out_file": "./logs/app-out.log",
+            "merge_logs": true,
+            "log_date_format": "YYYY-MM-DD HH:mm:ss",
+            "min_uptime": "60s",
+            "max_restarts": 10,
+            "autorestart": true,
+            "vizion": false,
+            "cron_restart": "1 0 * * *"
+        }
+    ]
+}

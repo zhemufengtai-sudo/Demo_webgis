@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoking</title>
+    <%- include headInclude.ejs %>
+    <link href="/css/uploadfile.css" rel="stylesheet" />
+    <style>
+        .closeTag:hover{
+            background-color: #dcdcdc;
+        }
+    </style>
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+        <div id="modelserinfo" data-source="/modelser/rmt/json/<%=host %>/<%=msid %>" ></div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                数据输入
+                <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                 </span>
+            </div>
+            <div id="DataPreparation" data-source="/modelser/rmt/inputdata/<%=host%>/<%=msid %>" data-type="rmt" data-host="<%=host %>" ></div>
+        </div>
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                操作
+            </div>
+            <div class="panel-body" style="text-align: center; min-height: 100px;">
+                <button id="btn_run" class="btn btn-success" style="width: 20%" >
+                    <i class="fa fa-cogs"></i>运行
+                </button>
+                <button href="#" class="btn btn-warning" style="width: 20%" onclick="window.close()" >
+                    <i class="fa fa-reply"></i>取消
+                </button>
+            </div>
+        </div>
+        <%- include footer.ejs %>
+    </div>
+</section>
+<%- include footerInclude.ejs %>
+<script type="text/javascript" src="/js/jquery.uploadfile.min.js" ></script>
+<script type="text/javascript" src="/js/geomodel/modelser.js" ></script>
+<script type="text/javascript" language="javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+<script type="text/javascript" >
+    $(document).ready(function(){
+        var msid = '<%=msid %>';
+        var host = '<%=host %>';
+        $('#btn_run').click(function(e){
+            var result = window.checkGeoData();
+            if(result.result == 'fail'){
+                return alert(result.message);
+            }
+            else if(result.result == 'suc'){
+                $.ajax({
+                    url : '/modelser/rmt/' + host + '/' + msid + '?ac=run&inputdata=' + JSON.stringify(window.allInputData) + '&outputdata=' + JSON.stringify(window.allOutputData),
+                    type:'GET',
+                    success : function(data){
+                        var resJson = JSON.parse(data);
+                        if(resJson.result == 'suc')
+                        {
+                            window.location.href = '/modelserrun/rmt/' + host + '/' + resJson.data;
+                        }
+                        else{
+                            $.gritter.add({
+                                title: '调用失败!',
+                                text: resJson.message
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

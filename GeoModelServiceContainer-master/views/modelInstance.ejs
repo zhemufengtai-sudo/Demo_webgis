@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%=global.LanguageConfig.ModelInstancesTable.LocalTitle %></title>
+    <%- include headInclude.ejs %>
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+        <section class="panel">
+            <header class="panel-heading">
+                <%=global.LanguageConfig.Heading.LocalModelService.Title %> - <%=global.LanguageConfig.Heading.LocalModelService.Instances %>
+            </header>
+            <div class="panel-body" id="ModelInsTable" data-source="/modelins/json/all" >
+            </div>
+        </section>
+        <%- include footer.ejs %>
+    </div>
+</section>
+<%- include footerInclude.ejs %><!--dynamic table-->
+<script type="text/javascript" language="javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript" src="/js/output/bundle.js"></script>
+
+</body>
+</html>

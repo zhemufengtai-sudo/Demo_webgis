@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%=global.LanguageConfig.ModelInstancesTable.LocalTitle %></title>
+    <%- include headInclude.ejs %>
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+        <section class="panel">
+            <header class="panel-heading">
+                <%=global.LanguageConfig.ModelInstancesTable.LocalTitle %>
+            </header>
+            <div class="panel-body">
+                <table  class="display table table-bordered table-striped" id="dynamic-table">
+                    <thead>
+                        <tr>
+                            <td><%=global.LanguageConfig.ModelInstancesTable.ID %></td>
+                            <td><%=global.LanguageConfig.ModelInstancesTable.ModelName %></td>
+                            <td><%=global.LanguageConfig.ModelInstancesTable.Version %></td>
+                            <td><%=global.LanguageConfig.ModelInstancesTable.StartTime %></td>
+                            <td><%=global.LanguageConfig.ModelInstancesTable.Status %></td>
+                            <td><%=global.LanguageConfig.ModelInstancesTable.Operation %></td>
+                        </tr>
+                    </thead>
+                    <tbody id="tb_data"></tbody>
+                </table>
+            </div>
+        </section>
+        <%- include footer.ejs %>
+    </div>
+</section>
+<%- include footerInclude.ejs %><!--dynamic table-->
+<script type="text/javascript" language="javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setInterval(function () {
+            $.ajax({
+                url:'/modelins/json/all',
+                success:function (data) {
+                    var resJson = JSON.parse(data);
+                    for(var i = 0; i < resJson.length; i++)
+                    {
+                        $('#tb_data').html('<tr>' +
+                                '<td>' + resJson[i].guid + '</td>' +
+                                '<td>' + resJson[i].ms.ms_model.m_name + '</td>' +
+                                '<td>' + resJson[i].ms.mv_num + '</td>' +
+                                '<td>' + resJson[i].start + '</td>' +
+                                '<td>' + resJson[i].state + '</td>' +
+                                '<td><button class="btn btn-sm btn-danger" onClick="kill(\'' + resJson[i].guid + '\')">' + window.LanguageConfig.ModelInstancesTable.Kill + '</button</td>' +
+                                '</tr>');
+                    }
+                }
+            });
+        }, 3000);
+    });
+
+    function kill(guid){
+        $.ajax({
+            url:'/modelins/' + guid + '?ac=kill',
+            method : 'PUT',
+            success:function (data) {
+                var resJson = JSON.parse(data);
+                if(resJson.res == 'suc'){
+                    alert(window.LanguageConfig.ModelInstancesTable.Killed);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

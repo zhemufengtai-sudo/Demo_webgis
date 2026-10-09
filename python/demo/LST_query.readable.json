@@ -1,0 +1,517 @@
+{
+    "_id": "6ac38582bb0d409b2dce6ff1",
+    "ms_id": "6ac0fd50bb0d409b2dce6fe1",
+    "msr_ms": {
+        "_id": "6ac0fd50bb0d409b2dce6fe1",
+        "ms_model": {
+            "m_name": "ta_morphometry_13-Land_Surface_Temperature",
+            "m_type": "Terrain Analysis > Morphometry - SAGA",
+            "m_url": "",
+            "p_id": "6581c4b3d46c661e947d19ce891aae1d",
+            "m_id": null,
+            "m_register": false
+        },
+        "mv_num": "1.0",
+        "ms_des": "",
+        "ms_platform": 1,
+        "ms_update": "2026-10-03T13:04:16.001Z",
+        "ms_path": "ta_morphometry_13-Land_Surface_Temperature_6ac0fd50bb0d409b2dce6fe1/",
+        "ms_img": null,
+        "ms_xml": {
+            "ModelClass": {
+                "$": {
+                    "name": "ta_morphometry_13-Land_Surface_Temperature",
+                    "uid": "E0DE4D39-B251-43c5-97C9-9E2FC82A6355",
+                    "type": "ta_morphometry"
+                },
+                "AttributeSet": {
+                    "Categories": {
+                        "Category": {
+                            "$": {
+                                "principle": "SAGA",
+                                "path": "Terrain Analysis > Morphometry"
+                            }
+                        }
+                    },
+                    "LocalAttributes": {
+                        "LocalAttribute": {
+                            "$": {
+                                "local": "EN_US",
+                                "localName": "Land Surface Temperature",
+                                "wiki": ""
+                            },
+                            "Keywords": "Land Surface Temperature",
+                            "Abstract": ""
+                        }
+                    }
+                },
+                "Behavior": {
+                    "RelatedDatasets": {
+                        "DatasetItem": [
+                            {
+                                "$": {
+                                    "name": "Control",
+                                    "type": "internal",
+                                    "description": "SAGA Type:Control"
+                                },
+                                "UdxDeclaration": {
+                                    "$": {
+                                        "name": "",
+                                        "description": ""
+                                    },
+                                    "UdxNode": {
+                                        "UdxNode": [
+                                            {
+                                                "$": {
+                                                    "name": "PARAMETERS_GRID_SYSTEM",
+                                                    "type": "DTKT_STRING",
+                                                    "description": "Name:Grid system.\tType:Grid system."
+                                                }
+                                            },
+                                            {
+                                                "$": {
+                                                    "name": "Z_REFERENCE",
+                                                    "type": "DTKT_STRING",
+                                                    "description": "Name:Elevation at Reference Station.\tType:Floating point.\tConstraints:Default: 0.000000."
+                                                }
+                                            },
+                                            {
+                                                "$": {
+                                                    "name": "T_REFERENCE",
+                                                    "type": "DTKT_STRING",
+                                                    "description": "Name:Temperature at Reference Station.\tType:Floating point.\tDescription:Temperature at reference station in degree Celsius..\tConstraints:Default: 0.000000."
+                                                }
+                                            },
+                                            {
+                                                "$": {
+                                                    "name": "T_GRADIENT",
+                                                    "type": "DTKT_STRING",
+                                                    "description": "Name:Lapse Rate.\tType:Floating point.\tDescription:Vertical temperature gradient in degree Celsius per 100 meter..\tConstraints:Default: 0.600000."
+                                                }
+                                            },
+                                            {
+                                                "$": {
+                                                    "name": "C_FACTOR",
+                                                    "type": "DTKT_STRING",
+                                                    "description": "Name:C Factor.\tType:Floating point.\tConstraints:Default: 1.000000."
+                                                }
+                                            },
+                                            {
+                                                "$": {
+                                                    "name": "LAI_MAX",
+                                                    "type": "DTKT_STRING",
+                                                    "description": "Name:Maximum LAI.\tType:Floating point.\tConstraints:Minimum: 0.010000\r\nDefault: 8.000000."
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "SemanticAttachment": {
+                                        "Concepts": "",
+                                        "SpatialRefs": "",
+                                        "Units": "",
+                                        "DataTemplates": ""
+                                    }
+                                }
+                            },
+                            {
+                                "$": {
+                                    "name": "Grid",
+                                    "type": "internal",
+                                    "description": "SAGA Type:Grid"
+                                },
+                                "UdxDeclaration": {
+                                    "$": {
+                                        "name": "",
+                                        "description": ""
+                                    },
+                                    "UdxNode": {
+                                        "UdxNode": [
+                                            {
+                                                "$": {
+                                                    "name": "header",
+                                                    "type": "DTKT_ANY",
+                                                    "description": "header"
+                                                },
+                                                "UdxNode": [
+                                                    {
+                                                        "$": {
+                                                            "name": "upper left corner X",
+                                                            "type": "DTKT_REAL",
+                                                            "description": "upper left corner X"
+                                                        }
+                                                    },
+                                                    {
+                                                        "$": {
+                                                            "name": "pixel width",
+                                                            "type": "DTKT_REAL",
+                                                            "description": "pixel width"
+                                                        }
+                                                    },
+                                                    {
+                                                        "$": {
+                                                            "name": "tansform param 1",
+                                                            "type": "DTKT_REAL",
+                                                            "description": "tansform param 1"
+                                                        }
+                                                    },
+                                                    {
+                                                        "$": {
+                                                            "name": "upper left corner Y",
+                                                            "type": "DTKT_REAL",
+                                                            "description": "upper left corner Y"
+                                                        }
+                                                    },
+                                                    {
+                                                        "$": {
+                                                            "name": "pixel height",
+                                                            "type": "DTKT_REAL",
+                                                            "description": "pixel height"
+                                                        }
+                                                    },
+                                                    {
+                                                        "$": {
+                                                            "name": "tansform param 2",
+                                                            "type": "DTKT_REAL",
+                                                            "description": "tansform param 2"
+                                                        }
+                                                    },
+                                                    {
+                                                        "$": {
+                                                            "name": "width",
+                                                            "type": "DTKT_INT",
+                                                            "description": "width"
+                                                        }
+                                                    },
+                                                    {
+                                                        "$": {
+                                                            "name": "height",
+                                                            "type": "DTKT_INT",
+                                                            "description": "height"
+                                                        }
+                                                    },
+                                                    {
+                                                        "$": {
+                                                            "name": "dataType",
+                                                            "type": "DTKT_STRING",
+                                                            "description": "dataType"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "$": {
+                                                    "name": "bands",
+                                                    "type": "DTKT_LIST",
+                                                    "description": "bands"
+                                                },
+                                                "UdxNode": {
+                                                    "$": {
+                                                        "name": "band",
+                                                        "type": "DTKT_ANY",
+                                                        "description": "band"
+                                                    },
+                                                    "UdxNode": [
+                                                        {
+                                                            "$": {
+                                                                "name": "nodata",
+                                                                "type": "DTKT_REAL",
+                                                                "description": "nodata"
+                                                            }
+                                                        },
+                                                        {
+                                                            "$": {
+                                                                "name": "offset",
+                                                                "type": "DTKT_REAL",
+                                                                "description": "offset"
+                                                            }
+                                                        },
+                                                        {
+                                                            "$": {
+                                                                "name": "scale",
+                                                                "type": "DTKT_REAL",
+                                                                "description": "scale"
+                                                            }
+                                                        },
+                                                        {
+                                                            "$": {
+                                                                "name": "unit",
+                                                                "type": "DTKT_STRING",
+                                                                "description": "unit"
+                                                            }
+                                                        },
+                                                        {
+                                                            "$": {
+                                                                "name": "value",
+                                                                "type": "DTKT_LIST",
+                                                                "description": "nodata"
+                                                            },
+                                                            "UdxNode": {
+                                                                "$": {
+                                                                    "name": "line",
+                                                                    "type": "DTKT_REAL",
+                                                                    "description": "a line data of raster"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "$": {
+                                                    "name": "proj",
+                                                    "type": "DTKT_STRING",
+                                                    "description": "projection"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "SemanticAttachment": {
+                                        "Concepts": "",
+                                        "SpatialRefs": "",
+                                        "Units": "",
+                                        "DataTemplates": ""
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "StateGroup": {
+                        "States": {
+                            "State": {
+                                "$": {
+                                    "id": "D1FF1716-DF20-406d-AC5E-C36326468031",
+                                    "name": "RUNSTATE",
+                                    "type": "basic",
+                                    "description": "Start Run"
+                                },
+                                "Event": [
+                                    {
+                                        "$": {
+                                            "name": "DEM",
+                                            "type": "response",
+                                            "description": "Name:Elevation.\tType:Grid.",
+                                            "optional": "false"
+                                        },
+                                        "ResponseParameter": {
+                                            "$": {
+                                                "datasetReference": "Grid",
+                                                "description": ""
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$": {
+                                            "name": "SWR",
+                                            "type": "response",
+                                            "description": "Name:Short Wave Radiation.\tType:Grid.\tDescription:[kW / m2].",
+                                            "optional": "false"
+                                        },
+                                        "ResponseParameter": {
+                                            "$": {
+                                                "datasetReference": "Grid",
+                                                "description": ""
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$": {
+                                            "name": "LAI",
+                                            "type": "response",
+                                            "description": "Name:Leaf Area Index.\tType:Grid.",
+                                            "optional": "false"
+                                        },
+                                        "ResponseParameter": {
+                                            "$": {
+                                                "datasetReference": "Grid",
+                                                "description": ""
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$": {
+                                            "name": "LST",
+                                            "type": "noresponse",
+                                            "description": "Name:Land Surface Temperature.\tType:Grid.",
+                                            "optional": "false"
+                                        },
+                                        "DispatchParameter": {
+                                            "$": {
+                                                "datasetReference": "Grid",
+                                                "description": ""
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$": {
+                                            "name": "Control",
+                                            "type": "response",
+                                            "description": "optional parameters",
+                                            "optional": "true"
+                                        },
+                                        "ControlParameter": {
+                                            "$": {
+                                                "datasetReference": "Control",
+                                                "description": ""
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "StateTransitions": ""
+                    }
+                },
+                "Runtime": {
+                    "$": {
+                        "name": "saga_tool:Land Surface Temperature",
+                        "version": "1.0",
+                        "baseDir": "",
+                        "entry": "saga_model.exe"
+                    },
+                    "HardwareConfigures": {
+                        "INSERT": [
+                            {
+                                "_": "[2,infinite)",
+                                "$": {
+                                    "name": "cpu core numble"
+                                }
+                            },
+                            {
+                                "_": "[50GB,infinite)",
+                                "$": {
+                                    "name": "disk avail size"
+                                }
+                            },
+                            {
+                                "_": "[2.2GHz,infinite)",
+                                "$": {
+                                    "name": "cpu frequency"
+                                }
+                            },
+                            {
+                                "_": "[2GB,infinite)",
+                                "$": {
+                                    "name": "memory size"
+                                }
+                            }
+                        ]
+                    },
+                    "SoftwareConfigures": {
+                        "INSERT": [
+                            {
+                                "_": "10",
+                                "$": {
+                                    "name": "VC++ Runtime",
+                                    "platform": "x64"
+                                }
+                            },
+                            {
+                                "_": "win 7||win 8||win 8.1||win 10||win xp",
+                                "$": {
+                                    "name": "Operating System",
+                                    "platform": "x64"
+                                }
+                            }
+                        ]
+                    },
+                    "Assemblies": {
+                        "Assembly": [
+                            {
+                                "$": {
+                                    "name": "GDALRasterMapping.exe",
+                                    "path": "$(DataMappingPath)\\GDALRasterMapping\\"
+                                }
+                            },
+                            {
+                                "$": {
+                                    "name": "OGRVectorMapping.exe",
+                                    "path": "$(DataMappingPath)\\OGRVectorMapping\\"
+                                }
+                            }
+                        ]
+                    },
+                    "SupportiveResources": ""
+                }
+            }
+        },
+        "ms_status": 1,
+        "ms_user": {
+            "u_name": "openGMS",
+            "u_email": "[Unknown]"
+        },
+        "ms_limited": "0",
+        "ms_permission": 0
+    },
+    "msr_datetime": "2026-10-5 7:09:54 PM",
+    "msr_span": 0,
+    "msr_user": {
+        "u_name": "[UNKNOWN]",
+        "u_ip": "127.0.0.1",
+        "u_type": 2
+    },
+    "msr_guid": "4efe6e2a-2a4f-4dc5-9234-6a1c5ea06dfd",
+    "msr_input": [
+        {
+            "StateId": "D1FF1716-DF20-406d-AC5E-C36326468031",
+            "StateName": "RUNSTATE",
+            "Event": "DEM",
+            "DataId": "gd_4a9ca0d0-c0ad-11f1-9d0a-8765a80f43e3",
+            "Destroyed": false,
+            "StateDes": "Start Run",
+            "Tag": "",
+            "Requested": false
+        },
+        {
+            "StateId": "D1FF1716-DF20-406d-AC5E-C36326468031",
+            "StateName": "RUNSTATE",
+            "Event": "SWR",
+            "DataId": "gd_4aa4b720-c0ad-11f1-9d0a-8765a80f43e3",
+            "Destroyed": false,
+            "StateDes": "Start Run",
+            "Tag": "",
+            "Requested": false
+        },
+        {
+            "StateId": "D1FF1716-DF20-406d-AC5E-C36326468031",
+            "StateName": "RUNSTATE",
+            "Event": "LAI",
+            "DataId": "gd_4aff0c20-c0ad-11f1-9d0a-8765a80f43e3",
+            "Destroyed": false,
+            "StateDes": "Start Run",
+            "Tag": "",
+            "Requested": false
+        },
+        {
+            "StateId": "D1FF1716-DF20-406d-AC5E-C36326468031",
+            "StateName": "RUNSTATE",
+            "StateDes": "Start Run",
+            "Event": "Control",
+            "Destroyed": false,
+            "Tag": "RUNSTATE-Control",
+            "Requested": false,
+            "DataId": ""
+        }
+    ],
+    "msr_output": [
+        {
+            "StateId": "D1FF1716-DF20-406d-AC5E-C36326468031",
+            "StateName": "RUNSTATE",
+            "StateDes": "Start Run",
+            "Event": "LST",
+            "Destroyed": false,
+            "Tag": "RUNSTATE-LST",
+            "DataId": "",
+            "TimeData": []
+        }
+    ],
+    "msr_status": 0,
+    "msr_logs": [],
+    "m_logs": [],
+    "msr_runninginfo": {
+        "InvokeErr": "",
+        "StdOut": "",
+        "StdErr": ""
+    },
+    "msr_processparams": [],
+    "msr_controlparams": {}
+}

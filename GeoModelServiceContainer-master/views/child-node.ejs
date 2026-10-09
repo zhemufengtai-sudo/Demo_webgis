@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Child Info</title>
+    <%- include headInclude.ejs %>
+    <!--dynamic table-->
+    <!--<link href="/js/advanced-datatable/css/demo_page.css" rel="stylesheet" />-->
+    <!--<link href="/js/advanced-datatable/css/demo_table.css" rel="stylesheet" />-->
+    <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css" />
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+        
+        <div class="panel panel-info">
+            <div class="panel-heading" >
+                Model Services
+            </div>
+            <div class="panel-body">
+                <div id="rmtModelSerTable" data-type="rmthost" data-host="<%=host %>" data-source="/modelser/rmt/json/<%=host %>/all" ></div>
+            </div>
+        </div>
+        
+        <div class="panel panel-info">
+            <div class="panel-heading" >
+                Instances
+            </div>
+            <div class="panel-body" id="ModelInsTable" data-type="rmthost" data-source="/modelins/rmt/json/<%=host %>/all">
+            </div>
+        </div>
+        
+        <div class="panel panel-info">
+            <div class="panel-heading" >
+                Records
+            </div>
+            <div class="panel-body">
+                <section class="panel" >
+                    <header class="panel-heading">
+                        Statistic
+                    </header>
+                    <div class="panel-body" id="ModelSerRunStatistic" data-source="/modelserrun/rmt/json/<%=host %>/all?type=statistic" ></div>
+                    <br />
+                    <br />
+                </section>
+                <div id="rmtModelSerRunTable" 
+                    data-source="/modelserrun/rmt/json/<%=host %>/all" 
+                    data-type="rms"
+                    data-host="<%=host %>"
+                ></div>
+            </div>
+        </div>
+        <%- include footer.ejs %>
+    </div>
+</section>
+<%- include footerInclude.ejs %>
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+
+<!-- jQuery Flot Chart-->
+<script src="/js/flot-chart/jquery.flot.js"></script>
+<script src="/js/flot-chart/jquery.flot.tooltip.js"></script>
+<script src="/js/flot-chart/jquery.flot.resize.js"></script>
+<script src="/js/flot-chart/jquery.flot.pie.resize.js"></script>
+<script src="/js/flot-chart/jquery.flot.selection.js"></script>
+<script src="/js/flot-chart/jquery.flot.stack.js"></script>
+<script src="/js/flot-chart/jquery.flot.time.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%=global.LanguageConfig.Notice.NoticeTable %></title>
+    <link rel="stylesheet" href="/css/jqpagination.css" />
+    <link rel="stylesheet" type="text/css" href="/js/gritter/css/jquery.gritter.css" />
+    <%- include headInclude.ejs %>
+    <script id="template" type="text/html">
+        <li class="list-group-item ">
+
+            <a class="" href="#">
+                <small class="pull-right text-muted" style="width: 110px;">{time}</small>
+                <strong>{title}</strong>
+                <span>{detail}</span>
+                <span class="item-type" style="display: none;">{type}</span>
+            </a>
+    </script>
+    <script id="get-pager" type="text/html">
+        <div id="pager" class="pull-right" style="margin: 0!important;height:30px;">
+            <a href="#" class="first btn btn-sm btn-primary" data-action="first"><i class="fa fa-backward"></i></a>
+            <a href="#" class="previous btn btn-sm btn-primary" data-action="previous"><i class="fa fa-chevron-left"></i></a>
+            <input type="text" readonly="readonly" data-max-page="40" style="width:60px;text-align:center;"/>
+            <a href="#" class="next btn btn-sm btn-primary" data-action="next"><i class="fa fa-chevron-right"></i></a>
+            <a href="#" class="last btn btn-sm btn-primary" data-action="last"><i class="fa fa-forward"></i></a>
+        </div>
+    </script>
+</head>
+<body class="sticky-header">
+<section>
+    <%- include header.ejs %>
+    <div class="main-content">
+    <%- include nav.ejs %>
+    <section class="panel" >
+        <header class="panel-heading">
+            <%=global.LanguageConfig.Heading.Notice %>
+        </header>
+        <div class="panel-body" id="NoticeTable" ></div>
+    </section>
+    <%- include footer.ejs %>
+    </div>
+</section>
+<%- include footerInclude.ejs %>
+
+<script src="/js/jquery.jqpagination.js"></script>
+<script type="text/javascript" src="/js/gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+
+</body>
+</html>

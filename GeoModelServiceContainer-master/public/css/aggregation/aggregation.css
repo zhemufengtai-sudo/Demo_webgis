@@ -1,0 +1,117 @@
+input[type=checkbox]{
+    margin:0 !important;
+}
+.webix_tree_item.webix_selected{
+    background: #27ae60 !important;
+}
+.main-content{
+    margin-bottom: 0 !important;
+    height:100%;
+    background: #FFF !important;
+}
+html{
+    height:100%;
+}
+section{
+    height:100%;
+}
+body{
+    height:100%;
+}
+.mslist-error{
+    color: rgb(206, 81, 86);
+    font-weight: bold;
+}
+.mslist-default{
+
+}
+#div-AggreMS{
+    height:100%;
+    margin:0 0;
+    padding:0 !important;
+}
+#canvas-div{
+    height:100%;
+    padding: 10px;
+    float: left;
+    /*position: absolute;*/
+    /*right:0;*/
+}
+#canvas{
+    border: 1px solid #e2e2e2;
+    /*height:100%;*/
+    /*width:100%;*/
+    background: url('/js/jtopo/image/grid.png') repeat;
+    border-radius: 5px;
+}
+#toolbar{
+    position: fixed;
+    margin:10px;
+}
+#solution-info{
+    display: none;
+    position: fixed;
+    bottom:10px;
+}
+.toolbar{
+    margin-left:20px;
+}
+.contextMenu{
+    display: none;
+    position: absolute;
+}
+.contextMenu li:hover{
+    background: #eeeeee;
+}
+.contextMenu li a,
+.contextMenu li a:hover{
+    cursor: pointer;
+    text-decoration: none;
+    color: #000;
+}
+#div-AggreMS-header{
+    float: left;
+    width: 100%;
+    /*height: 35px;*/
+    padding:10px;
+    border-bottom: 1px solid #e2e2e2;
+}
+#webix-AggreMS-list{
+    float: left;
+    width:100%;
+    padding: 0px;
+    position: absolute;
+    top: 56px;
+    bottom:0;
+    overflow: scroll;
+}
+#webix-AggreMS-list pre{
+    max-height:250px;
+}
+.webix_accordionitem_label{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor:move;
+}
+.data-info-dialog{
+    width:100% !important;
+}
+.upload-span a,
+.upload-span a:hover{
+    cursor: pointer;
+    text-decoration: none;
+}
+.ui-dialog{
+    width: 350px;
+    height: 550px;
+}
+.btn .btn-default .active{
+    background:#d2d2d2;
+}
+.error{
+    color:red;
+}

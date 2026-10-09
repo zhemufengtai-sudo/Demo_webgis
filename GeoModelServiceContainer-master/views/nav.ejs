@@ -1,0 +1,134 @@
+
+<script id="nav-news-li" type="text/html">
+    <li class="new">
+        <a href="/note">
+            <span class="task-info">
+                <span class="name">{title}<span class="badge badge-success">new</span></span>
+                <!--<span class="msg">{detail}</span>-->
+            </span>
+        </a>
+    </li>
+</script>
+
+<!-- header section start-->
+<div class="header-section">
+
+    <!--toggle button start-->
+    <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+    <!--toggle button end-->
+
+    <!--notification menu start -->
+    <div class="menu-right">
+        <ul class="notification-menu">
+            <li><a href="#" class="btn btn-default info-number" style="color:red" ><%= global.debug %></a> </li>
+            <li>
+                <a href="#"  class="btn btn-default dropdown-toggle info-number" data-toggle="dropdown">
+                    <i class="fa fa-envelope-o"></i>
+                    <span id="newsNum" class="badge"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-head pull-right">
+                    <h5 class="title"><%=global.LanguageConfig.Heading.Notice %></h5>
+                    <ul id="nav-news-ul" class="dropdown-list normal-list"></ul>
+                </div>
+            </li>
+            <li>
+                <a href="#"  class="btn btn-default dropdown-toggle info-number" data-toggle="dropdown">
+                    <%=global.LanguageConfig.SelectButton %>
+                    <span id="newsNum" class="badge"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-head pull-right">
+                    <h5 class="title"></h5>
+                    <ul id="nav-language-ul" class="dropdown-list normal-list">
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <img src="/images/photos/admin.png" alt="" />
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                    <li><a href="/admininfo"><i class="fa fa-user"></i><%=global.LanguageConfig.Navigation.User.Info %></a></li>
+                    <li><a href="/setting"><i class="fa fa-cog"></i><%=global.LanguageConfig.Navigation.User.Settings %></a></li>
+                    <li><a href="/login"><i class="fa fa-sign-out"></i><%=global.LanguageConfig.Navigation.User.SignOut %></a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!--notification menu end -->
+
+</div>
+<!-- header section end-->
+
+<script type="text/javascript">
+    function setLanguage(language){
+        $.ajax({ 
+            url : '/languages?language=' + language,
+            method : 'PUT',
+            success : function(data){
+                setCookie('language', language);
+                window.location.reload();
+            }.bind(this)
+        });
+    }
+
+    $(document).ready(function () {
+        window.Polling = function() {
+            $.ajax({
+                url:'/notices/all?read=false',
+                type:'GET',
+                success:function (msg){
+                    var data = JSON.parse(msg);
+                    if(data.result == 'suc' && data.data.length){
+                        $('#newsNum').html(data.data.length);
+                        renderNews(data.data);
+                    }
+                    else {
+                        $('#newsNum').html(null);
+                        renderNews(null);
+                    }
+//                setTimeout(Polling,10000);
+                }
+            })
+        }
+
+        function renderNews(data) {
+            if(data){
+                $('#nav-news-ul').html('');
+                var i=0;
+                for(var i=0;i<data.length;i++){
+                    if(i>=3){
+                        break;
+                    }
+                    var tmp = $('#nav-news-li').html();
+                    tmp = tmp.replace(/\{(\w+)\}/g, function (source, key) {
+                        return data[i][key];
+                    });
+                    $('#nav-news-ul').append(tmp);
+                }
+                $('#nav-news-ul').append('<li class="new"><a href="/note" >' + window.LanguageConfig.Navigation.Notice.ShowMessage + '</a></li>');
+            }
+            else {
+                $('#nav-news-ul').html('');
+                $('#nav-news-ul').append('<li class="new"><a href="/note" >' + window.LanguageConfig.Navigation.Notice.NoMessage + '</a></li>');
+            }
+        }
+
+        Polling();
+
+        timer = setInterval(Polling, 600000);
+
+        $.ajax({
+            url : '/languages',
+            success : function(data){
+                var resJson = JSON.parse(data);
+                if(resJson.result == 'suc'){
+                    var configs = resJson.data;
+                    for(var i = 0; i < configs.length; i++){
+                        $('#nav-language-ul').append('<li><a href="#" onClick="setLanguage(\'' + configs[i].File + '\')" >' + configs[i].ConfigName + '</a></li>');
+                    }
+                }
+            }
+        });
+    });
+</script>

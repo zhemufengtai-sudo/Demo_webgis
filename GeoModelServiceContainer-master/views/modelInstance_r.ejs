@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%=global.LanguageConfig.ModelInstancesTable.RemoteTitle %></title>
+    <%- include headInclude.ejs %>
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+        <section class="panel">
+            <header class="panel-heading">
+                <%=global.LanguageConfig.ModelInstancesTable.RemoteTitle %>
+            </header>
+            <div class="panel-body">
+                <table  class="display table table-bordered table-striped" id="dynamic-table">
+                    <thead>
+                    <tr>
+                        <td><%=global.LanguageConfig.ModelInstancesTable.ID %></td>
+                        <td><%=global.LanguageConfig.ModelInstancesTable.ModelName %></td>
+                        <td><%=global.LanguageConfig.ModelInstancesTable.Version %></td>
+                        <td><%=global.LanguageConfig.ModelInstancesTable.StartTime %></td>
+                        <td><%=global.LanguageConfig.ModelInstancesTable.Status %></td>
+                        <td><%=global.LanguageConfig.ModelInstancesTable.Address %></td>
+                        <td><%=global.LanguageConfig.ModelInstancesTable.Operation %></td>
+                    </tr>
+                    </thead>
+                    <tbody id="tb_data"></tbody>
+                </table>
+            </div>
+        </section>
+        <%- include footer.ejs %>
+    </div>
+</section>
+<%- include footerInclude.ejs %><!--dynamic table-->
+<script type="text/javascript" language="javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setInterval(function () {
+            $.ajax({
+                url:'/modelins/rmt/json/all',
+                success:function (data) {
+                    var td = '';
+                    var data = JSON.parse(data);
+                    var childmsri = data.childmsri;
+                    for(var i = 0; i < childmsri.length; i++)
+                    {
+                        if(childmsri[i].ping == 'suc'){
+                            var msris = childmsri[i].msri;
+                            msris.forEach(function (msri) {
+                                td += '<tr>' +
+                                        '<td>' + msri.guid + '</td>' +
+                                        '<td>' + msri.ms.ms_model.m_name + '</td>' +
+                                        '<td>' + msri.ms.mv_num + '</td>' +
+                                        '<td>' + msri.start + '</td>' +
+                                        '<td>' + msri.state + '</td>' +
+                                        '<td>' + childmsri[i].host + '</td>' +
+                                        '<td></td>' +
+                                        '</tr>';
+                            })
+                        }
+                    }
+                    $('#tb_data').html(td);
+                }
+            });
+        }, 5000);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Network</title>
+    <%- include headInclude.ejs %>
+    <!--dynamic table-->
+    <link href="/js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+    <link href="/js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css" />
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+        <section class="panel">
+            <header class="panel-heading">
+                Remote Services - Network - Parent
+            </header>
+            <div class="panel-body">
+                <div id="parentPanel"></div>
+            </div>
+        </section>
+        <section class="panel">
+            <header class="panel-heading">
+                Remote Services - Network - Children
+            </header>
+            <div class="panel-body">
+                <div id="childPanel"></div>
+            </div>
+        </section>
+        <%- include footer.ejs %>
+    </div>
+</section>
+
+<%- include footerInclude.ejs %>
+
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+<script type="text/javascript" src="/js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+<!--dynamic table initialization -->
+<!--<script src="/js/dynamic_table_init.js"></script>-->
+</body>
+</html>

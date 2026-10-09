@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Environmet-Dictionary</title>
+    <link href="/css/uploadfile.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/js/gritter/css/jquery.gritter.css" />
+    <link rel="stylesheet" type="text/css" href="/js/webix/webix.css" />
+    <!-- <link rel="stylesheet" href="/css/enviroment/enviro.css"> -->
+    <%- include headInclude.ejs %>
+
+    <style>
+        /*.webix_ss_header{*/
+            /*background:#F1F1F1 !important;*/
+        /*}*/
+        .webix_cell[aria-level='2'] > .webix_tree_checkbox{
+            display: none
+        }
+        .webix_cell[aria-level='3'] > .webix_tree_checkbox{
+            display: none
+        }
+        .webix_cell[aria-level='4'] > .webix_tree_checkbox{
+             display: none
+         }
+        .webix_cell[aria-level='5'] > .webix_tree_checkbox{
+            display: none
+        }
+        .webix_cell[aria-level='6'] > .webix_tree_checkbox{
+            display: none
+        }
+        .tabletree-header{
+            height:35px;
+        }
+        .tabletree-operate{
+            text-align:center;
+        }
+        .tabletree-btn{
+            margin:0 5px;
+        }
+        .tabletree-delbtn{
+            background-color: #c5555f;
+            border-color: #ac2e41;
+        }
+        .tabletree-delbtn:hover{
+            background-color: #c53c41;
+            border-color: #ac2d40;
+        }
+        .tabletree-editbtn{
+            background-color: #a9d86e;
+            border-color: #90d85f;
+        }
+        .tabletree-editbtn:hover{
+            background-color: #94d86c;
+            border-color: #90d85f;
+        }
+        input[type=checkbox]{
+            margin:0 !important;
+        }
+    </style>
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+
+        <section id="enviro-section" style="background-color: #FFFFFF;margin-bottom: 0px">
+            <div id="swe" style="margin-bottom:10px"></div>
+            <div id="hwe" style="margin-bottom:10px"></div>
+        </section>
+
+        <%- include footer.ejs %>
+    </div>
+</section>
+<%- include footerInclude.ejs %>
+
+<script type="text/javascript" src="/js/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript" src="/js/webix/webix.js"></script>
+<script type="text/javascript" src="/js/gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+
+</body>
+</html>

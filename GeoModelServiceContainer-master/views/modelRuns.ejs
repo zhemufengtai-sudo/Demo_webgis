@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%=global.LanguageConfig.Heading.LocalModelService.Records %></title>
+    <%- include headInclude.ejs %>
+    <!--dynamic table-->
+    <link href="/js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+    <link href="/js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css" />
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+        <section class="panel" >
+            <header class="panel-heading">
+                <%=global.LanguageConfig.Heading.LocalModelService.Title %> - <%=global.LanguageConfig.Heading.LocalModelService.Records %> - <%=global.LanguageConfig.Heading.LocalModelService.Statistic %>
+            </header>
+            <div class="panel-body" id="ModelSerRunStatistic" data-source="/modelserrun/json/all?type=statistic" ></div>
+            <br />
+            <div class="panel-body" id="ModelSerRunPieStatisitc" data-source="/modelserrun/json/all?type=piestatistic" ></div>
+        </section>
+        <section class="panel" >
+            <header class="panel-heading">
+                <%=global.LanguageConfig.Heading.LocalModelService.Title %> - <%=global.LanguageConfig.Heading.LocalModelService.Records %> - <%=global.LanguageConfig.Heading.LocalModelService.Table %>
+            </header>
+            <div class="panel-body">
+                <div id="rmtModelSerRunTable" data-source="/modelserrun/json/all" ></div>
+            </div>
+        </section>
+
+        <%- include footer.ejs %>
+    </div>
+</section>
+<%- include footerInclude.ejs %>
+<script type="text/javascript" language="javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+
+<!-- jQuery Flot Chart-->
+<script src="/js/flot-chart/jquery.flot.js"></script>
+<script src="/js/flot-chart/jquery.flot.tooltip.js"></script>
+<script src="/js/flot-chart/jquery.flot.resize.js"></script>
+<script src="/js/flot-chart/jquery.flot.pie.resize.js"></script>
+<script src="/js/flot-chart/jquery.flot.selection.js"></script>
+<script src="/js/flot-chart/jquery.flot.stack.js"></script>
+<script src="/js/flot-chart/jquery.flot.time.js"></script>
+
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+</body>
+</html>

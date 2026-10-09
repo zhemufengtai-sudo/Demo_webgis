@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>SCS 模型计算</title>
+  <link rel="stylesheet" href="/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="./index.css">
+  <script src="/leaflet/leaflet.js"></script>
+  <script src="./xian.js"></script>
+  <script src="./node_modules/chart.js/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <h1>SCS 模型计算</h1>
+  <form id="scs-form"> 
+  <div class ="container">
+    <!-- <第一个容器> -->
+    <div class="left-panel">
+      <div class="parameter-container">
+        <label for="p">
+        <strong>P(一次降雨的降雨总量 ,单位mm):</strong>
+          <input id="p" type="number"
+             value="50.0" min="0" step="any" required>
+        </label>
+
+        <label for="s">
+        <strong>S(流域当时的最大可能滞留量,单位mm):</strong>
+          <input id="s" type="number"
+             value="60.0" min="0" step="any" required>
+        </label>
+    </div>
+  <div class="result-row">
+    <label for="t"><strong>Q(径流量,单位mm):</strong></label>
+    <output id="t" name="t" for="p s"
+            aria-live="polite">尚未计算</output>
+    <strong><pre id="result" role="status" aria-live="polite"></pre></strong>
+  </div>
+    <button id="submit" type="submit">提交</button>
+    <!-- <descrption> -->
+  <section class="description-container">
+    <h2>SCS降雨-径流模型说明</h2>
+    <p>
+      <strong>本demo分为两部分:</strong>一是基于OpenGMS平台的模型服务容器，将模型条目库里面SCS降雨-径流关系模型部署到本地，基于Python后端
+      与模型服务容器通过json文件传输，基于FastAPI进行前后端传参，并通过chart.js进行可视化展示；<br>二是基于Leaflet进行地图可视化，内置
+      行政区划与公园geojson数据，可通过点击公园geojson数据获取对应S数据，设置不同降雨量，进行可视化分析<br>
+      <strong>经典SCS降雨-径流关系模型：</strong>Q=(P-0.2S)^2/(P+0.8S)是建立方便有效径流预测模型是垄沟集雨种植技术设计和推广的关键。
+      通过P(一次降雨的降雨总量)和S(流域当时的最大可能滞留量)可以得到Q(径流量),进而为后续进行评估铺膜材料、田间规格等相关工程参数设置提供辅助建议。
+    </p>
+  </section>
+  </div>
+  <!-- <右侧图表> -->
+  <div class="right-panel">
+    <h2 class="chart-h2">SCS降雨-径流关系模型统计图</h2>
+    <div class="chart-toolbar">
+      <button id="fixed_P" type="button">固定 P 值</button>
+      <button id="fixed_S" type="button">固定 S 值</button>
+  </div>
+  <div class="chart1">
+    <canvas id="chart_SCS"></canvas>
+  </div>
+  </div>
+  </div>
+  </div>
+</form>
+
+<h2>
+  地图
+  <div class="description-container">
+    <p>
+      模拟小雨,设置<strong>P=6mm</strong>;&emsp;模拟中雨,设置<strong>P=18mm</strong>;&emsp;模拟大雨,设置<strong>P=38mm</strong>;&emsp;模拟中雨,设置<strong>P=70mm</strong>
+      <br>点击公园区块,会读取对应区块的S值并更改上面S参数框内数值
+    </p>
+  </div>
+</h2>
+<div id="map"></div>
+
+  <script type="module"> //import必须加type= module
+  //import function
+    import { init, getHistoryData,resetChart } from './chart.js';
+    init('chart_SCS');
+    //利用pane 进行相关设置
+    
+    const form = document.getElementById("scs-form");
+    const button = document.getElementById("submit");
+    const resultBox = document.getElementById("result");
+    const pInput = document.getElementById("p");
+    const sInput = document.getElementById("s");
+    const tOutput = document.getElementById("t");
+    const fixedPButton = document.getElementById("fixed_P");
+    const fixedSButton = document.getElementById("fixed_S"); 
+
+    //限制
+    fixedPButton.addEventListener("click",()=>{ //第一个参数是事件类型，很多种...
+        pInput.disabled = !pInput.disabled;
+        if(pInput.disabled){
+          sInput.disabled = false;
+          resetChart(pInput.disabled, sInput.disabled);
+          fixedPButton.textContent = "固定 P 值";
+        }else{
+          fixedPButton.textContent = "取消固定 P 值";}
+    });
+    fixedSButton.addEventListener("click",()=>{
+        sInput.disabled = !sInput.disabled; //取反，disable代表被关闭
+        if(sInput.disabled){
+          pInput.disabled = false;
+          resetChart(pInput.disabled, sInput.disabled)
+          fixedSButton.textContent = "固定 S 值";
+        }else{
+          fixedSButton.textContent = "取消固定 S 值";}
+    });
+
+    //提交
+    form.addEventListener("submit", async (event) => { //当事件被提交的时候...
+      event.preventDefault(); // 阻止表单刷新页面
+      if (button.disabled) return;
+
+      const p = document.getElementById("p").valueAsNumber;
+      const s = document.getElementById("s").valueAsNumber;
+
+      if ( p < 0 || s <= 0) {
+        tOutput.value = "尚未计算";
+        resultBox.textContent = "请输入有效数值：P ≥ 0，S > 0。";
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "计算中……";
+      tOutput.value = "计算中……";
+
+      try {
+        const response = await fetch("/api/scs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ p, s })
+        });
+        const result = await response.json();
+        const t = result.result1;
+        tOutput.value = String(result.result1);
+        resultBox.textContent = "";
+        getHistoryData(p,s,t,pInput.disabled);
+      } 
+      catch (error) {
+        tOutput.value = "计算失败";
+        resultBox.textContent = "错误：" + error.message;
+      }
+      finally {
+        button.disabled = false;
+        button.textContent = "提交";
+      }
+      ;
+
+    });
+    // //图表数据传输
+    // button.addEventListener("submit",()=>{
+    //   if(fixedPButton.disabled || !fixedSButton.disabled){
+    //     getHistoryData_S(sInput, tOutput);
+    //   }
+    //   else if(fixedSButton.disabled || !fixedPButton.disabled){
+    //     getHistoryData_P(pInput,tOutput);
+    //   }
+    // });
+    
+  </script>
+  <script>
+    const TIAN_DI_TU_KEY =  "3a49befcfd3be1c50dd838ca02e1e5c4";
+    var map = L.map('map',{
+      center:[34.266744,108.9479], 
+      zoom:15,
+      maxzoom:28,
+      attributionControl:false,
+      zoomControl:true,
+      dragging:true,
+      closePopupOnClick:false,
+    });
+    // map.on('click', function(e) { alert('You clicked the map at ' + e.latlng);});
+    L.tileLayer(`http://t{s}.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${TIAN_DI_TU_KEY}`, {
+     subdomains: [0,1,2,3,4,5,6,7], 
+     maxZoom: 18 
+    }).addTo(map);
+  </script>
+  <script src="./park.js" ></script>
+  <script>
+    map.createPane('province');
+    map.getPane('province').style.zIndex = 401;
+    const xianLayer = L.geoJSON(XIAN, 
+    { style: style,
+      onEachFeature: onEachFeature,
+      pane:'province'
+    }).addTo(map);
+    map.fitBounds(xianLayer.getBounds());
+
+    var info = L.control();
+    info.onAdd = function (map) {
+    this.creatediv = L.DomUtil.create('div', 'info'); // 创建一个HTML元素 标签名，类名"info" this 这里指self(info)
+    this.update();
+    return this.creatediv;};  
+    // method that we will use to update the control based on feature properties passed
+    info.update = function (props) {
+    this.creatediv.innerHTML = '<h4>西安市行政区划</h4>' +  (props ?
+        '<b>' + props.name + '</b><br />' +'<h4>行政编号</h4>' + props.adcode 
+        : 'None');};
+    info.addTo(map);
+
+    const overlayMaps = {"西安市行政区划": xianLayer, "公园": xianLayer_Park};
+    const layerControl = L.control.layers(null,overlayMaps,   
+      {position: "topleft",collapsed: false}
+    ).addTo(map);
+
+  </script>
+  
+</body>
+</html>

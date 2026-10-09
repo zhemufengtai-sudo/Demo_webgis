@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%=global.LanguageConfig.Heading.CloudModelService %></title>
+    <%- include headInclude.ejs %>
+    <!--dynamic table-->
+    <!--<link type="text/css" href="/js/fuelux/css/tree-style.css" rel="stylesheet" />-->
+
+    <!--<link href="/css/bootstrap.css" rel="stylesheet" />-->
+
+    <link rel="stylesheet" href="/css/uploadfile.css" />
+    <link rel="stylesheet" href="/css/jquery.stepy.css">
+    <link href="/js/treeview/css/bootstrap-treeview.css" rel="stylesheet" />
+
+    <!--file upload-->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-fileupload.min.css" />
+
+    <style>
+        .webix-list-header{
+            background:#d2e3ef;
+            border-width:0 0 1px 0 !important;
+            border-bottom:1px solid #FFF
+        }
+        .matchList-matched{
+            background-color: rgba(212, 223, 255, 0.27) !important
+        }
+        .matchList-unmatched{
+            background-color: rgba(255, 99, 99, 0.2)
+        }
+        .matchList-null{
+            background-color: rgba(255, 255, 255, 1) !important
+        }
+        .webix_cell[aria-level='2'] > .webix_tree_checkbox{
+            display: none
+        }
+        .webix_cell[aria-level='3'] > .webix_tree_checkbox{
+            display: none
+        }
+        .webix_cell[aria-level='4'] > .webix_tree_checkbox{
+            display: none
+        }
+        .webix_cell[aria-level='5'] > .webix_tree_checkbox{
+            display: none
+        }
+        .webix_cell[aria-level='6'] > .webix_tree_checkbox{
+            display: none
+        }
+        .tabletree-header{
+            height:35px;
+        }
+        .tabletree-operate{
+            text-align:center;
+        }
+        .tabletree-btn{
+            margin:0 5px;
+        }
+        .tabletree-delbtn{
+            background-color: #c5555f;
+            border-color: #ac2e41;
+        }
+        .tabletree-delbtn:hover{
+            background-color: #c53c41;
+            border-color: #ac2d40;
+        }
+        .tabletree-editbtn{
+            background-color: #a9d86e;
+            border-color: #90d85f;
+        }
+        .tabletree-editbtn:hover{
+            background-color: #94d86c;
+            border-color: #90d85f;
+        }
+        input[type=checkbox]{
+            margin:0 !important;
+        }
+        .paging1{
+            width:100px;
+            float:left;
+            text-align:center;
+        }
+        .webix_checked{
+            color:#47a447;
+            font-weight: bold; cursor:pointer;
+        }
+        .webix_notchecked{
+            color:#ed9c28;
+            font-weight:bold; cursor: pointer;
+        }
+        .panel-heading{
+            text-transform:none
+        }
+    </style>
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+        <section class="panel">
+            <header class="panel-heading" >
+                Deployment From Portal
+            </header>
+            <div class="panel-body" id="ModelSerTransform" ></div>
+        </section>
+        <%- include footer.ejs %>
+    </div>
+</section>
+
+<%- include footerInclude.ejs %>
+
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/jquery.stepy.js"></script>
+
+<!--file upload-->
+<script type="text/javascript" src="/js/bootstrap-fileupload.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.form.js" ></script>
+<script type="text/javascript" src="/js/jquery.uploadfile.min.js" ></script>
+
+<script type="text/javascript" src="/js/treeview/js/bootstrap-treeview.js"></script>
+
+<script type="text/javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+</body>
+</html>

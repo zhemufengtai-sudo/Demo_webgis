@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <link href="/css/filetable.css" rel="stylesheet" />
+    <link href="/css/uploadfile.css" rel="stylesheet" />
+    <script type="text/javascript" src="/js/jquery-1.9.1.min.js" ></script>
+    <script type="text/javascript" src="/js/jquery.uploadfile.min.js" ></script>
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            var upload = $("#fileuploader").uploadFile({
+                //上传路径
+                url:"/modelser/space/upload/",
+                //上传文件名
+                fileName:"myfile",
+                //是否多个文件
+                multiple:true,
+                //是否拖拽上传
+                dragDrop:true,
+                //最大文件数
+                maxFileCount:5,
+                //规定上传文件格式
+                acceptFiles:"image/*",
+                //最大文件大小
+                maxFileSize:100*1024*1024,
+                //表单数据
+                formData:
+                {
+                    path:"<%= path %>"
+                },
+                //上传文件按钮文本
+                uploadStr:"上传文件",
+                //取消上传按钮文本
+                cancelStr:"取消文件",
+                //拖拽上传提示文本（带HTML）
+                dragDropStr:"<span><b>拖拽上传</b></span>",
+                //完成上传提示文本
+                doneStr:"完成上传",
+                //是否自动传
+                autoSubmit:false,
+                //是否显示已上传文件
+                showDownload:false,
+                //上传完成后
+                afterUploadAll:function(obj)
+                {
+                    location.reload();
+                },
+                //出现错误
+                onError: function(files,status,errMsg,pd)
+                {
+                    //files: list of files
+                    //status: error status
+                    //errMsg: error message
+                }
+            });
+
+            $("#extrabutton").click(function()
+            {
+                upload.startUpload();
+            });
+        });
+    </script>
+</head>
+<body>
+<input id="mid" style="display: none;" value="model1" />
+<div>
+    <table class="imgtable" >
+        <thead>
+        <tr>
+            <th></th>
+            <th>文件名</th>
+            <th>大小</th>
+            <th>更新时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="fileList">
+        <% if(parent != null)
+        {
+        %><tr >
+            <td></td>
+            <td onclick="window.location.href = '<%= parent %>'">
+                <a>...</a>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr><%
+        }%>
+        <% filesData.forEach(function(item)
+        {
+            if(item.type == 'dir')
+            {
+            %><tr >
+                <td></td>
+                <td onclick="window.location.href = window.location.href + '/<%=item.name %>'">
+                    <a><img src="/images/f01.png" />&nbsp;&nbsp; <%=item.name %> </a>
+                </td>
+                <td></td>
+                <td><%= item.update %></td>
+                <td></td>
+            </tr><%
+            }
+        });
+                filesData.forEach(function(item)
+        {
+            if(item.type == 'file')
+            {
+            %><tr >
+                <td></td>
+                <td><a><img src="/images/f03.png" />&nbsp;&nbsp; <%=item.name %> </a></td>
+                <td><%
+                    if(item.size > 1048576)
+                    {
+                    %><%= (item.size / 1048576).toFixed(2) %> MB<%
+                    }
+                    else if(item.size < 1024)
+                    {
+                        %> < 1 KB<%
+                    }
+                    else
+                    {
+                        %><%= (item.size / 1024).toFixed(2) %> KB<%
+                    }%></td>
+                <td><%=  item.update %></td>
+                <td></td>
+            </tr><%
+            }
+        });
+        %>
+        </tbody>
+    </table>
+</div>
+<div id="fileuploader">Upload</div>
+<input id="extrabutton" type="button" value="开始上传" />
+</body>
+</html>

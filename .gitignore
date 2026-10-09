@@ -1,0 +1,15 @@
+# 本地环境配置，可能包含密码
+.env
+.env.*
+!.env.example
+
+# 常见的私钥文件
+*.key
+*.pem
+id_rsa
+id_ed25519
+
+# 专门存放私密信息的文件夹
+secrets/
+XIAN_DEM_30.tif
+XIAN_LAI_30.tif

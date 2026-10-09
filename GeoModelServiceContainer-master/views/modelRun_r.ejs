@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>模型运行信息</title>
+    <%- include headInclude.ejs %>
+    <link href="/css/uploadfile.css" rel="stylesheet" />
+    <link href="/css/ol.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/ol3-layerswitcher.css" />
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+        <div id="modelserinfo" data-source="/modelser/rmt/json/<%=host %>/<%=msid %>" ></div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                模型运行信息
+                <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                 </span>
+            </div>
+            <div class="panel-body">
+                <p><strong>模型开始时间&nbsp;:&nbsp;</strong><%= msr.msr_date.toLocaleString() %></p>
+                <p><strong>模型调用者&nbsp;:&nbsp;</strong><%if(msr.msr_user.u_type == 0){ %>本地调用者<% }
+                    else {%>外部调用者<%}%>&nbsp;&nbsp;<%= msr.msr_user.u_name %></p>
+                <p><strong>运行实例GUID&nbsp;:&nbsp;</strong><%= msr.msr_guid %></p>
+                <p><strong>输入数据&nbsp;:&nbsp;</strong><br />
+                    <% for(var i = 0; i < msr.msr_input.length; i++){ %>
+		    <%=msr.msr_input[i].StateId %>
+		    &nbsp;&nbsp;&nbsp;
+		    <%=msr.msr_input[i].Event %>
+		    &nbsp;:&nbsp;
+		    <a href="/geodata/rmt/<%=host%>/<%=msr.msr_input[i].DataId %>" ><%=msr.msr_input[i].DataId %></a>
+		    &nbsp;&nbsp;&nbsp;
+                    <a><span style="cursor:pointer;padding: 0;" class="udx_snapshot btn-lg" onclick="snapshotReq(this.id)" data-toggle="modal" data-target="#myModal" id="<%=msr.msr_input[i].DataId %>">Snapshot</span></a>
+		    <br />
+		    <%}%>
+                </p>
+                <p><strong>输出数据&nbsp;:&nbsp;</strong><br />
+                    <span id="sp_dataoutput">
+                    </span>
+                </p>
+                <p id="p_des" style="white-space: pre-line">
+                    <strong>模型运行描述信息&nbsp;:&nbsp;</strong>
+                    <br />
+                    <%=msr.msr_des
+                    %>
+                </p>
+                <p><strong>运行时间&nbsp;:&nbsp;</strong><span id="sp_time"><%=msr.msr_time.toString() %>&nbsp;s&nbsp;</span></p>
+                <p id="progressMess"><strong>当前进度&nbsp;:&nbsp;</strong></p>
+                <div id="bar_pro_div" class="progress progress-striped active progress-sm">
+                    <div id="bar_pro" style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-success">
+                        <span class="sr-only">0% 完成</span>
+                    </div>
+                </div>
+                <div style="height: 30px;"></div>
+            </div>
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: hidden">
+            <div class="modal-dialog" style="width: 750px;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: rgba(0,0,0,0);width: 750px;position: absolute;top: 0;left: 0;z-index: 100;">
+                        <button type="button" id="close-modal" class="close" data-dismiss="modal" aria-hidden="true" style="color: #000;">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel" style="color: #000;">
+                            UDX Visualization
+                        </h4>
+                    </div>
+                    <div class="modal-body" style="padding: 0;">
+                        <div id="map" style="width:750px;height: 500px;" class="map"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--udx为table时以chart可视化-->
+
+        <%- include footer.ejs %>
+    </div>
+</section>
+<%- include footerInclude.ejs %>
+<script src="/js/polyfill.min.js"></script>
+<script src="/js/ol.js"></script>
+<script src="/js/ol3-layerswitcher.js"></script>
+<script src="/js/proj4.js"></script>
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+<script type="text/javascript" src="/js/chart-js/highcharts.js"></script>
+<script type="text/javascript" src="/js/chart-js/highcharts-more.js"></script>
+<script type="text/javascript" src="/js/chart-js/solid-gauge.js"></script>
+<script type="text/javascript" src="/js/chart-js/exporting.js"></script>
+<script type="text/javascript" src="/js/chart-js/data.js"></script>
+<script type="text/javascript">
+    var snapshotReq = function (gdid) {
+        var nice = $("html").niceScroll();
+        nice.opt.mousescrollstep = 0;
+        $("#map").empty();
+        $.ajax({
+            url:'/geodata/snapshot/rmt/<%=host %>/' + gdid,
+            success:function (data) {
+                var rst = JSON.parse(data);
+                if(rst.err == undefined){
+                    if(rst.dataType == 'table'){
+                        var myDIV = '<div id="chartOption" style="float: left;;display: block;height: 460px;width: 25%;position: relative;top: 40px;">'
+                                + '<form id="chartType" style="margin: 60px 20px;" class="form-horizontal pull-left chart-control">'
+                                + '<div class="control-group">'
+                                + '<label class="control-label">Chart type :</label>'
+                                + '<div class="series-list">'
+                                + '<label class="checkbox inline">'
+                                + '<input id="chartType1" style="margin: 10px 0;" checked="checked" name="ct" type="radio" value="line"/>'
+                                + 'Line'
+                                + '</label>'
+                                + '<label class="checkbox inline">'
+                                + '<input id="chartType2" style="margin: 10px 0;" name="ct" type="radio" value="spline"/>'
+                                + 'Spline'
+                                + '</label>'
+                                + '<label class="checkbox inline">'
+                                + '<input id="chartType3" style="margin: 10px 0;" name="ct" type="radio" value="area"/>'
+                                + 'Area'
+                                + '</label>'
+                                + '<label class="checkbox inline">'
+                                + '<input id="chartType4" style="margin: 10px 0;" name="ct" type="radio" value="bar"/>'
+                                + 'Bar'
+                                + '</label>'
+                                + '<label class="checkbox inline">'
+                                + '<input id="chartType5" style="margin: 10px 0;" name="ct" type="radio" value="scatter"/>'
+                                + 'Scatter'
+                                + '</label>'
+                                + '<label class="checkbox inline">'
+                                + '<input id="chartType6" style="margin: 10px 0;" name="ct" type="radio" value="bubble"/>'
+                                + 'Bubble'
+                                + '</label>'
+                                + '</div>'
+                                + '</div>'
+                                + '</form>'
+                                + '</div>'
+                                + '<div id="chartContainer" style="float: left;display: block;position: relative;top: 40px;width: 68%;height: 460px;"></div>'
+                        $('#map').html(myDIV);
+
+                        //添加select的option
+                        var option = $('<option>');
+                        option.attr('value','NULL');
+                        option.append('NULL');
+                        option.appendTo($('#x-axis'));
+                        for(var i=0;i<rst.series.length;i++){
+                            var option = $('<option>');
+                            option.attr('value',rst.series[i].name);
+                            option.append(rst.series[i].name);
+                            option.appendTo($('#x-axis'));
+                            if(rst.series[i].type == 'num')
+                                option.clone(true).appendTo($('#y-axis'));
+                        }
+                        var myChart = new Highcharts.Chart({
+                            chart: {
+                                renderTo: 'chartContainer', //图表放置的容器，DIV
+                                backgroundColor:'#FFF',
+                                zoomType:'xy',
+                                type: (function () {
+                                    for(var i=0;i<$('#ct').size();i++){
+                                        if($('#ct')[i].attr('checked') == true){
+                                            return $('#ct')[i].attr('value');
+                                        }
+                                    }
+                                })(), //图表类型为曲线图
+                                events: {
+                                    load: function() {
+                                    }
+                                }
+                            },
+                            title: {
+                                text: (function () {
+
+                                    var title = 'table data chart'
+                                    return title;
+                                })()
+                            },
+                            xAxis: (function () {
+
+                            })(),
+                            yAxis: {
+                                title:{
+                                    text:'Values'
+                                }
+                            },
+                            tooltip: {//数据点提示框
+                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                                footerFormat: '</table>',
+                                shared: true,
+                                useHTML: true
+                            },
+                            exporting: {
+                                buttons:{contextButton:{symbolFile:'#EFF0F4',enabled:true}},
+                                enabled: true
+                            },
+                            credits: {enabled: false},
+                            plotOptions:{},
+                            series: (function () {
+                                var series = [];
+                                for(var i=0;i<rst.series.length;i++){
+                                    if(rst.series[i].type!='num')
+                                        continue;
+                                    series.push({
+                                        name:rst.series[i].name,
+                                        data:rst.series[i].data,
+                                        fillOpacity:0.3
+                                    })
+                                }
+                                return series;
+                            })()
+
+                        });
+                        Highcharts.setOptions({
+                            global: {
+                                useUTC: false
+                            }
+                        });
+                        //改变图表类型
+                        $('#chartType input[name="ct"]').change(function () {
+                            //alert($('#chartType input[name="ct"]:checked')[0].value);
+                            for(var k=0;k<myChart.series.length;k++){
+                                myChart.series[k].update({
+                                    type:$('#chartType input[name="ct"]:checked')[0].value
+                                })
+                            }
+                        });
+                    }
+                    else{
+                        console.log(rst.layers);
+                        var projection = 'EPSG:3857';
+                        var layerExtents=[],map,
+                                minx = 999999999,
+                                miny = 999999999,
+                                maxx = -999999999,
+                                maxy = -999999999;
+                        for(var j=0;j<rst.layers.length;j++){
+                            var ENCorner = rst.layers[j].ENCorner;
+                            var WSCorner = rst.layers[j].WSCorner;
+                            ENCorner = proj4('EPSG:3857').forward(ENCorner);
+                            WSCorner = proj4('EPSG:3857').forward(WSCorner);
+                            layerExtents.push([WSCorner[0],WSCorner[1],ENCorner[0],ENCorner[1]]);
+                            if(minx>WSCorner[0])
+                                minx = WSCorner[0];
+                            if(miny>WSCorner[1])
+                                miny = WSCorner[1];
+                            if(maxx<ENCorner[0])
+                                maxx = ENCorner[0];
+                            if(maxy<ENCorner[1])
+                                maxy = ENCorner[1];
+                        }
+                        var imageExtent = [minx,miny,maxx,maxy];
+
+                        var myView = new ol.View({
+                            center: ol.extent.getCenter(imageExtent),
+                            projection:projection
+                        });
+                        var overlayGroup = new ol.layer.Group({
+                            title: 'Layers',
+                            layers: [
+                                new ol.layer.Tile({
+                                    title: 'OSM',
+                                    visible: true,
+                                    source: new ol.source.OSM()
+                                })
+                            ]
+                        });
+                        map = new ol.Map({
+                            layers: [overlayGroup],
+                            target: 'map',
+                            view: myView
+                        });
+                        if(rst.dataType == 'geotiff'){
+                            //坐标为平面坐标
+                            for(var i=0;i<rst.layers.length;i++){
+                                var title = rst.layers[i].name;
+                                title = title.substring(title.lastIndexOf('_')+1,title.indexOf('.'));
+                                title = '[band:' + title + ']';
+                                if(title.length>9)
+                                    title = '';
+                                overlayGroup.getLayers().push(new ol.layer.Image({
+                                    title: 'grid'+title,
+                                    source: new ol.source.ImageStatic({
+                                        ratio: 1,
+                                        params: {'LAYERS': 'show:0'},
+                                        url: rst.layers[i].path,
+                                        imageExtent: layerExtents[i],
+                                        projection:projection
+                                    })
+                                }));
+                            }
+                        }
+                        else if(rst.dataType == 'shp'){
+                            overlayGroup.getLayers().push(new ol.layer.Vector({
+                                ratio: 1,
+                                params: {'LAYERS': 'show:0'},
+                                title: 'shapefile',
+                                source: new ol.source.Vector({
+                                    features:(new ol.format.GeoJSON()).readFeatures(rst.layers[0].path,{ featureProjection:'EPSG:3857'})
+                                })
+                            }));
+                        }
+                        else if(rst.dataType == 'grid list'){
+                            for(var i=0;i<rst.layers.length;i++){
+                                var title = rst.layers[i].name;
+                                var titlePart = title.split('_');
+                                var listIndex = titlePart[titlePart.length-2];
+                                var bandIndex = titlePart[titlePart.length-1];
+                                bandIndex = bandIndex.substring(0,bandIndex.indexOf('.png'));
+                                overlayGroup.getLayers().push(new ol.layer.Image({
+                                    title: 'list_' + listIndex + '[band:' + bandIndex + ']',
+                                    source: new ol.source.ImageStatic({
+                                        ratio: 1,
+                                        params: {'LAYERS': 'show:0'},
+                                        url: rst.layers[i].path,
+                                        imageExtent: layerExtents[i],
+                                        projection:projection
+                                    })
+                                }));
+                            }
+                        }
+                        else if(rst.dataType == 'shp list'){
+                            for(var i=0;i<rst.layers.length;i++) {
+                                overlayGroup.getLayers().push(new ol.layer.Vector({
+                                    ratio: 1,
+                                    params: {'LAYERS': 'show:0'},
+                                    title: 'shapefile',
+                                    source: new ol.source.Vector({
+                                        features:(new ol.format.GeoJSON()).readFeatures(rst.layers[i].path,{ featureProjection:'EPSG:3857'})
+                                    })
+                                }));
+                            }
+                        }
+                        map.getView().fit(imageExtent, map.getSize());
+                        var layerSwitcher = new ol.control.LayerSwitcher({
+                            tipLabel: 'Légende' // Optional label for button
+                        });
+                        map.addControl(layerSwitcher);
+                    }
+                }
+                else{
+                    alert('udx data err!');
+                    $('#close-modal').trigger("click");
+                }
+            }
+        })
+    };
+
+    //恢复滚动条
+    $('#myModal').on('hide.bs.modal',function () {
+        var nice = $("html").niceScroll();
+        nice.opt.enablemousewheel = true;
+        nice.opt.mousescrollstep = 40;
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var host = '<%=host %>';
+        var blFinish = false;
+        var interval = setInterval(function () {
+            if(!blFinish)
+            {
+                $.ajax({
+                    url : '/modelins/rmt/json/<%=host %>/<%=msr.msr_guid %>',
+                    success : function (data) {
+                        var resJson = JSON.parse(data);
+                        if(resJson.result == 'suc' && resJson.data == null)
+                        {
+                            blFinish = true;
+                            ProcessFinished(1);
+                            clearInterval(interval);
+                            $.ajax({
+                                url : '/modelserrun/rmt/json/<%=host %>/<%=msr._id %>',
+                                success : function (data) {
+                                    var jsItem = JSON.parse(data);
+                                    var descript = jsItem.data.msr_des.replace(/\r\n/g, '<br />');
+                                    descript = descript.replace(/\\r\\n/g, '<br />');
+                                    descript = descript.replace(/\\n/g, '<br />');
+                                    descript = descript.replace(/\"/g, '');
+                                    descript = descript.replace(/Stand Output Message :/g, '<span class="label label-info" >模型程序标准输出</span><br />');
+                                    descript = descript.replace(/Stand Error Message :/g, '<span class="label label-warning" >模型程序错误信息</span><br />');
+                                    descript = descript.replace(/Error Message :/g, '<span class="label label-danger" >运行错误信息</span><br />');
+                                    $('#p_des').html('<strong>模型运行描述信息&nbsp;:&nbsp;</strong><br />' + descript);
+                                    $('#sp_time').html( jsItem.data.msr_time + '&nbsp; s &nbsp;');
+                                    if(jsItem.data.msr_status == 1)
+                                    {
+                                        var output = '';
+                                        for(var i = 0; i < jsItem.data.msr_output.length; i++)
+                                        {
+                                            output += jsItem.data.msr_output[i].StateId +
+                                                    '&nbsp;&nbsp;&nbsp;' + jsItem.data.msr_output[i].Event +
+                                                    '&nbsp;:&nbsp;<a href="/geodata/rmt/' + host + '/' + jsItem.data.msr_output[i].DataId + '" >' +
+						     jsItem.data.msr_output[i].DataId +'</a>&nbsp;&nbsp;&nbsp;&nbsp;' +
+						     '<a><span style="cursor:pointer;padding: 0;" class="udx_snapshot btn-lg" onclick="snapshotReq(this.id)" data-toggle="modal" data-target="#myModal" id="' + jsItem.data.msr_output[i].DataId + '">Snapshot</span></a>' +
+						     '<br />';
+                                        }
+
+                                        $('#sp_dataoutput').html(output);
+                                    }
+                                    else if(jsItem.data.msr_status == -1){
+                                        ProcessFinished(-1)
+                                    }
+                                    else {
+                                        ProcessFinished(-1)
+                                    }
+                                }
+                            });
+                        }
+                        else if(resJson.result == 'suc')
+                        {
+                            switch (resJson.data.state)
+                            {
+                                case 'MC_ENTER':
+                                {
+                                    setProcess(10);
+                                    break;
+                                }
+                                case 'MC_REQUEST':
+                                {
+                                    setProcess(20);
+                                    break;
+                                }
+                                case 'MC_CHECKDATA':
+                                {
+                                    setProcess(35);
+                                    break;
+                                }
+                                case 'MC_CALCULATE':
+                                {
+                                    setProcess(50);
+                                    break;
+                                }
+                                case 'MC_CHECKRES':
+                                {
+                                    setProcess(75);
+                                    break;
+                                }
+                                case 'MC_RESPONSE':
+                                {
+                                    setProcess(90);
+                                    break;
+                                }
+                                case 'MC_EXIT':
+                                {
+                                    setProcess(100);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                })
+            }
+        }, 500);
+    });
+
+    function setProcess(per) {
+        $('#bar_pro').css('width', per.toString() + '%');
+    }
+
+    function ProcessFinished(status) {
+        $('#bar_pro').css('width','100%');
+        $('#bar_pro_div').css('display','none');
+        if( status == 1)
+        {
+            $('#progressMess').html('<strong>当前进度&nbsp;:&nbsp;</strong><span class="label label-success" >已完成</span>');
+            var setTestBtn = $('<p style="text-align: center"><button id="setTest" class="btn btn-success" type="button" data-toggle="modal" data-target="#setTestModal" style="text-align: center;width: 250px;;margin-bottom: 50px"><i class="fa fa-cogs"></i> 设为测试数据</button></p>');
+            $('#msrInfo').append(setTestBtn);
+        }
+        else{
+            $('#progressMess').html('<strong>当前进度&nbsp;:&nbsp;</strong><span class="label label-danger">未完成</span>');
+        }
+    }
+
+
+</script>
+</body>
+</html>

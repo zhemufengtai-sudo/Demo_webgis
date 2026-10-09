@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Record</title>
+    <%- include headInclude.ejs %>
+    <link href="/css/uploadfile.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../js/ogmsDiagram/fonts/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../js/gritter/css/jquery.gritter.css" />
+    <!--MxGraph and OgmsDiagram-->
+    <script> mxBasePath = "../../js/ogmsDiagram/" </script>
+    <script type="text/javascript" src="../../js/ogmsDiagram/js/mxClient.js"></script>
+    <script type="text/javascript" src="../../js/ogmsDiagram/js/ogmsDiagram.js" ></script>
+</head>
+<body class="sticky-header">
+<section >
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+        <div id="modelserinfo" data-source="/modelser/json/<%=msr.msr_ms._id %>" ></div>
+        
+        <div class="panel panel-info" id="ModelSerRunInfo" data-source="/modelserrun/json/<%=msr._id %>" ></div>
+        
+        <%- include footer.ejs %>
+    </div>
+</section>
+<%- include footerInclude.ejs %>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/jquery.stepy.js"></script>
+<script src="/js/polyfill.min.js"></script>
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+<!--chart-->
+<script type="text/javascript" src="/js/chart-js/highcharts.js"></script>
+<script type="text/javascript" src="/js/chart-js/highcharts-more.js"></script>
+<script type="text/javascript" src="/js/chart-js/solid-gauge.js"></script>
+<script type="text/javascript" src="/js/chart-js/exporting.js"></script>
+<script type="text/javascript" src="/js/chart-js/data.js"></script>
+<!--gritter 通知-->
+<script type="text/javascript" src="/js/gritter/js/jquery.gritter.js"></script>
+<!--React main file-->
+<script type="text/javascript" src="../../js/output/bundle.js" ></script>
+
+</body>
+</html>

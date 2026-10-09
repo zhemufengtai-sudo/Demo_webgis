@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>模型服务器</title>
+    <%- include headInclude.ejs %>
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+
+        <iframe id="main_frame" src="/modelser/rmt/all" onload="setIframeHeight(this)" width="100%"> </iframe>
+
+    </div>
+</section>
+<%- include footerInclude.ejs %>
+<script type="text/javascript">
+    // document.domain = "caibaojian.com";
+    function setIframeHeight(iframe) {
+        if (iframe) {
+            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+            if (iframeWin.document.body) {
+                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+            }
+        }
+    };
+
+    window.onload = function () {
+        setIframeHeight(document.getElementById('external-frame'));
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>模型服务器</title>
+    <%- include headInclude.ejs %>
+    <!--dynamic table-->
+    <!--<link href="/js/advanced-datatable/css/demo_page.css" rel="stylesheet" />-->
+    <!--<link href="/js/advanced-datatable/css/demo_table.css" rel="stylesheet" />-->
+    <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css" />
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+        <div id="ModelSerDetail" 
+            data-source="/modelser/rmt/json/<%=host %>/<%=msid %>" 
+            data-source-msr="/modelserrun/rmt/json/<%=host %>/all?msid=<%=msid %>" 
+            data-source-msrstatistic="/modelserrun/rmt/json/<%=host %>/all?type=statistic&msid=<%=msid %>" 
+            data-type="admin"
+            data-host="<%=host %>"
+             ></div>
+        <%- include footer.ejs %>
+    </div>
+</section>
+<%- include footerInclude.ejs %>
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript" src="/js/geomodel/modelser.js" ></script>
+
+<!-- jQuery Flot Chart-->
+<script src="/js/flot-chart/jquery.flot.js"></script>
+<script src="/js/flot-chart/jquery.flot.tooltip.js"></script>
+<script src="/js/flot-chart/jquery.flot.resize.js"></script>
+<script src="/js/flot-chart/jquery.flot.pie.resize.js"></script>
+<script src="/js/flot-chart/jquery.flot.selection.js"></script>
+<script src="/js/flot-chart/jquery.flot.stack.js"></script>
+<script src="/js/flot-chart/jquery.flot.time.js"></script>
+
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+
+</body>
+</html>

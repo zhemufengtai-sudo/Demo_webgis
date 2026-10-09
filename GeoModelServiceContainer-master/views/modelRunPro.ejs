@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoking</title>
+    <%- include headInclude.ejs %>
+    <link href="/css/uploadfile.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/js/gritter/css/jquery.gritter.css" />
+    <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/js/fuelux/css/tree-style.css" />
+    <style>
+        .closeTag:hover{
+            background-color: #dcdcdc;
+        }
+        #gritter-notice-wrapper{
+            top:50px !important;
+        }
+    </style>
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+        <div id="modelserinfo" data-source="/modelser/json/<%=modelSer._id %>" ></div>
+        <div id="TestifyDataPanel" data-source="/modelser/testify/<%=modelSer._id %>" ></div>
+
+        <div class="panel panel-info">
+            <div class="panel-heading" style="background-color: #5CB85C;border-color: #5CB85C; ">
+                <%=global.LanguageConfig.InputData.Title %>
+                <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                </span>
+            </div>
+
+            <div id="DataPreparation" class="panel-body" data-source="/modelser/inputdata/json/<%=modelSer._id %>" ></div>
+        </div>
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <%=global.LanguageConfig.ModelServiceRunOperation.Title %>
+            </div>
+            <div class="panel-body" style="text-align: center; min-height: 100px;">
+                <button id="btn_run" class="btn btn-success" style="width: 20%" >
+                    <i class="fa fa-cogs"></i><%=global.LanguageConfig.ModelServiceRunOperation.Run %>
+                </button>
+                <button href="#" class="btn btn-warning" style="width: 20%" onclick="window.close()" >
+                    <i class="fa fa-reply"></i><%=global.LanguageConfig.ModelServiceRunOperation.Cancel %>
+                </button>
+            </div>
+        </div>
+
+        <div id="FlatTree3" class="tree tree-plus-minus tree-solid-line tree-unselectable">
+            <div class = "tree-folder" style="display:none;">
+                <div class="tree-folder-header">
+                    <i class="fa fa-folder"></i>
+                    <div class="tree-folder-name"></div>
+                </div>
+                <div class="tree-folder-content"></div>
+                <div class="tree-loader" style="display:none"></div>
+            </div>
+            <div class="tree-item" style="display:none;">
+                <i class="tree-dot"></i>
+                <div class="tree-item-name"></div>
+            </div>
+        </div>
+        <%- include footer.ejs %>
+    </div>
+</section>
+<%- include footerInclude.ejs %>
+
+<script type="text/javascript" src="/js/jquery.form.js" ></script>
+<script type="text/javascript" src="/js/jquery.uploadfile.min.js" ></script>
+<script type="text/javascript" src="/js/geomodel/modelser.js" ></script>
+<script type="text/javascript" language="javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+<!--gritter-->
+<script type="text/javascript" src="/js/gritter/js/jquery.gritter.js"></script>
+<!--table-->
+<!--<script type="text/javascript" src="/js/data-tables/jquery.dataTables.js"></script>-->
+<!--<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>-->
+<!--<script type="text/javascript" src="/js/editable-table.js"></script>-->
+<!--tree view-->
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var msid = "<%=modelSer._id %>";
+        $('#btn_run').click(function(e){
+            var result = window.checkGeoData();
+            if(result.result == 'fail'){
+                return alert(result.message);
+            }
+            else if(result.result == 'suc'){
+                var auth = '&auth=';
+                if(window.limited == 1){
+                    auth = auth + $('#authToken').val();
+                }
+                // $.ajax({
+                //     url : '/modelser/'+ msid + '?ac=run&inputdata=' + JSON.stringify(window.allInputData) + '&outputdata=' + JSON.stringify(window.allOutputData) + '&cp=' + JSON.stringify(window.cp) + auth,
+                //     type:'GET',
+                //     success : function(data){
+                //         var resJson = JSON.parse(data);
+                //         if(resJson.result == 'suc')
+                //         {
+                //             window.location.href = '/modelserrun/' + resJson.data;
+                //         }
+                //         else{
+                //             $.gritter.add({
+                //                 // (string | mandatory) the heading of the notification
+                //                 title: 'Fail!',
+                //                 // (string | mandatory) the text inside the notification
+                //                 text: resJson.message
+                //             });
+                //         }
+                //     }
+                // });
+
+                //修改模型调用请求为post
+                var jsonData = {
+                    inputdata: window.allInputData,
+                    outputdata: window.allOutputData,
+                    cp: window.cp
+                };
+                $.ajax({
+                    url: '/modelser/' + msid + '?ac=run' + auth,
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(jsonData),
+                    dataType: "json",
+                    success: function(resJson){
+                        if(resJson.result == 'suc'){
+                            window.location.href = '/modelserrun/' + resJson.data;
+                        }else{
+                            $.gritter.add({
+                                title: 'Fail!',
+                                text: resJson.message
+                            });
+                        }
+                    },
+                    error: function(message){
+                        $.gritter.add({
+                                title: 'Fail!',
+                                text: message.data
+                            });
+                    }
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

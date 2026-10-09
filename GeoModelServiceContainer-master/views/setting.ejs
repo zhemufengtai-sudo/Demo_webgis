@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Setting</title>
+    <%- include headInclude.ejs %>
+    
+    <!--dynamic table-->
+    <link href="/js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+    <link href="/js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css" />
+
+    <link rel="stylesheet" href="/css/drawChart.css">
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/js/chart-js/highcharts.js"></script>
+    <script type="text/javascript" src="/js/chart-js/highcharts-more.js"></script>
+    <script type="text/javascript" src="/js/chart-js/solid-gauge.js"></script>
+    <script type="text/javascript" src="/js/chart-js/exporting.js"></script>
+    <script type="text/javascript" src="/js/geomodel/drawChart.js" ></script>
+</head>
+<body class="sticky-header">
+<section>
+    <!-- 左导航栏 -->
+    <%- include header.ejs %>
+    <div class="main-content">
+        <!-- 上导航栏 -->
+        <%- include nav.ejs %>
+
+        <section class="panel" >
+            <header class="panel-heading">
+                <%=global.LanguageConfig.Heading.Settings.Information %> - <%=global.LanguageConfig.Settings.ComputerStatus %>
+            </header>
+            <div class="panel-body" >
+                <div id="chartContainer" style="min-height: 400px; position: relative;">
+                    <p id="data" style="margin-left: 20px;font-family: 'Microsoft YaHei';font-size: 16px;white-space: pre-wrap"></p> 
+                    <div id="chart_line1" style="margin-top: 20px;width: 700px; height: 400px; float: left"></div>
+                    <div id="chart_line2" style="width: 400px; height: 400px; margin-top: 20px; position: absolute;left: 700px;"></div>
+                    <!--<div id="chart_line3" style="min-width: 700px; height: 250px; max-width: 800px; margin: 0 auto; float: left"></div>-->
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" >
+            <header class="panel-heading">
+                <%=global.LanguageConfig.Heading.Settings.Information %> - <%=global.LanguageConfig.Settings.Title %>
+            </header>
+            <div id="settingPage" class="panel-body" >
+            </div>
+        </section>
+
+        <section class="panel" >
+            <header class="panel-heading">
+                <%=global.LanguageConfig.Heading.Settings.Information %> - <%=global.LanguageConfig.Settings.Assembly.Title %>
+            </header>
+            <div id="assemblyPage" class="panel-body" >
+            </div>
+        </section>
+
+        <%- include footer.ejs %>
+    </div>
+</section>
+<%- include footerInclude.ejs %>
+
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+
+<script type="text/javascript" src="/js/output/bundle.js" ></script>
+</body>
+</html>

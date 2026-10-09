@@ -1,0 +1,183 @@
+
+* {
+  /* 全局设置 可以使得指定很多属性 */
+  box-sizing: border-box;
+}
+/* 上下 */
+body {
+  margin: 0;
+  /* 上下 左右 */
+  padding: 10px 20px;
+  height: 100dvh;
+  display: grid;
+
+  /* 标题、模型区域、地图标题、地图（fr用于占比例） */
+  grid-template-rows:  auto auto auto minmax(0, 1fr);
+  gap: 6px;
+
+  font-family: "Microsoft YaHei", Arial, sans-serif;
+  font-size: 14px;
+  color: #263445;
+  background: #f5f7fb;
+}
+/* 左右 */
+.container {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr);
+  gap: 30px;
+  align-items: stretch;
+}
+/* 两个标题使用相同字号 */
+h1,h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+#scs-form {
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  border-radius: 12px;
+  border: 1px solid #dce3ec;
+}
+
+#result {
+  /* 上 左右 下 */
+  margin: 12px 0 0;
+  /* 继承父元素 */
+  font: inherit;
+  /* 保留分行行为 */
+  white-space: pre-wrap;
+}
+
+#result:empty {
+  display: none;
+}
+
+.info {
+    padding: 6px 8px;
+    /* 字号 行高 字体候选 */
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    /*水平偏移 垂直偏移 模糊半径 颜色*/
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+/*
+.legend {
+  
+    line-height: 18px;
+    color: #555;
+}
+/*
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}*/
+
+/*chart的外部容器*/
+.chart1 {
+  /* 相对定位 */
+  position: relative;
+  /* 参与弹性空间分配 */
+  flex: 1;
+  /* 允许在水平和垂直缩小 */
+  min-width: 0;
+  min-height: 0;
+  height: 0;
+
+  width: 90%;
+  /*让行内方向两侧的外边距自动分配*/
+  margin-inline: auto;
+}
+/*图表本身*/
+.chart1 > canvas {
+  position: absolute;
+  /*四边贴合*/
+  inset: 0;
+  width: 200% ;
+  /*画布显示高度*/
+  height: 100% !important;
+}
+.left-panel {
+  display: flex;
+  /**排列方向改为纵向*/
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.parameter-container,
+.description-container {
+  padding: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+  flex:1;
+}
+.parameter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.parameter-container label {
+  display: block;
+}
+
+.parameter-container input,
+.parameter-container output {
+  /*以块进行显示*/
+  display: block;
+  width: 100%;
+  margin-top: 3px;
+  padding: 3px 8px;
+}
+
+.description-container h2 {
+  /* 重置前面对于H2的限制 */
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.description-container p {
+  margin: 0;
+  font-size: 13px;
+  /* 字号的倍数 */
+  line-height: 1.45;
+}
+.chart-h2{
+  font-size:14px;
+}
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  min-height: 260px;
+
+  padding: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.chart-toolbar {
+  display: flex;
+  gap: 6px;
+}
+

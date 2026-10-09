@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>SCS 模型计算</title>
+  <link rel="stylesheet" href="./node_modules/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="./index.css">
+  <script src="./node_modules/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+  <h1>
+  <form>
+  </form>SCS 模型计算</h1>
+  <form id="scs-form">
+  <div class="input-row">
+     <label for="p">
+      降雨总量 P：
+      <input id="p" type="number"
+             value="50.0" min="0" step="any" required>
+    </label>
+
+    <label for="s">
+      最大可能滞留量 S：
+      <input id="s" type="number"
+             value="60.0" min="0" step="any" required>
+    </label>
+
+    <button id="submit" type="submit">提交</button>
+  </div>
+  <div class="result-row">
+    <label for="t">SCS 模型结果：</label>
+    <output id="t" name="t" for="p s"
+            aria-live="polite">尚未计算</output>
+  </div>
+  <pre id="result" role="status" aria-live="polite"></pre>
+</form>
+
+<h2>地图</h2>
+<div id="map"></div>
+
+  <script>
+    const form = document.getElementById("scs-form");
+    const button = document.getElementById("submit");
+    const resultBox = document.getElementById("result");
+    const tOutput = document.getElementById("t");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault(); // 阻止表单刷新页面
+      if (button.disabled) return;
+
+      const p = document.getElementById("p").valueAsNumber;
+      const s = document.getElementById("s").valueAsNumber;
+
+      if ( p < 0 || s <= 0) {
+        tOutput.value = "尚未计算";
+        resultBox.textContent = "请输入有效数值：P ≥ 0，S > 0。";
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "计算中……";
+      tOutput.value = "计算中……";
+
+      try {
+        const response = await fetch("/api/scs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ p, s })
+        });
+
+        const result = await response.json();
+        tOutput.value = String(result.result1);
+        resultBox.textContent = "计算完成。";
+      } 
+      catch (error) {
+        tOutput.value = "计算失败";
+        resultBox.textContent = "错误：" + error.message;
+      }
+      finally {
+        button.disabled = false;
+        button.textContent = "提交";
+      }
+      ;
+
+    });
+    
+  </script>
+  <script>
+    const TIAN_DI_TU_KEY =  "3a49befcfd3be1c50dd838ca02e1e5c4";
+    var map = L.map('map',{
+      center:[34.266744,108.9479], 
+      zoom:15,
+      maxzoom:28,
+      attributionControl:false,
+      zoomControl:true,
+      dragging:true,
+      closePopupOnClick:false,
+    });
+    // map.on('click', function(e) { alert('You clicked the map at ' + e.latlng);});
+    L.tileLayer(`http://t{s}.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${TIAN_DI_TU_KEY}`, {
+     subdomains: [0,1,2,3,4,5,6,7], 
+     maxZoom: 18 
+    }).addTo(map);
+    const xianLayer = L.geoJSON(XIAN, {style: style,onEachFeature: onEachFeature}).addTo(map);
+  // 自动调整视野，显示完整的西安区域
+    map.fitBounds(xianLayer.getBounds());
+    var info = L.control();
+    info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+    // method that we will use to update the control based on feature properties passed
+    info.update = function (props) {
+    this._div.innerHTML = '<h4>西安市行政区划</h4>' +  (props ?
+        '<b>' + props.name + '</b><br />' +'<h4>行政编号</h4>' + props.adcode 
+        : 'Hover over a state');
+};
+
+    info.addTo(map);
+    
+  </script>
+  
+</body>
+</html>

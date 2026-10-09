@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoking</title>
+    <%- include headInclude.ejs %>
+    <link href="/css/uploadfile.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/js/gritter/css/jquery.gritter.css" />
+    <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/js/fuelux/css/tree-style.css" />
+</head>
+<body>
+    <div style="background:#eff0f4" >
+        <div id="modelserinfo" data-source="/modelser/json/<%=msid %>" ></div>
+        <div id="TestifyDataPanel" data-source="/modelser/testify/<%=msid %>" data-type="CUSTOM" ></div>
+        <div class="panel panel-info">
+            <div class="panel-heading" style="background-color: #5CB85C;border-color: #5CB85C; ">
+                Data Input
+                <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                </span>
+            </div>
+
+            <div id="DataPreparation" class="panel-body" data-source="/modelser/inputdata/json/<%=msid %>" data-type="CUSTOM" ></div>
+        </div>
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                Operation
+            </div>
+            <div class="panel-body" style="text-align: center; min-height: 100px;">
+                <button id="btn_run" class="btn btn-success" style="width: 20%" >
+                    <i class="fa fa-cogs"></i>Run
+                </button>
+                <button href="#" class="btn btn-warning" style="width: 20%" onclick="window.close()" >
+                    <i class="fa fa-reply"></i>Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+    <%- include footer.ejs %>
+
+    <%- include footerInclude.ejs %>
+
+    <script type="text/javascript" src="/js/jquery.form.js" ></script>
+    <script type="text/javascript" src="/js/jquery.uploadfile.min.js" ></script>
+    <script type="text/javascript" src="/js/geomodel/modelser.js" ></script>
+    <script type="text/javascript" language="javascript" src="/js/advanced-datatable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+    <script type="text/javascript" src="/js/output/bundle.js" ></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var msid = '<%=msid %>';
+            $('#btn_run').click(function(e){
+                var result = window.checkGeoData();
+                if(result.result == 'fail'){
+                    return alert(result.message);
+                }
+                else if(result.result == 'suc'){
+                    var auth = '&auth=';
+                    if(window.limited == 1){
+                        auth = auth + $('#authToken').val();
+                    }
+                    $.ajax({
+                        url : '/modelser/'+ msid + '?ac=run&inputdata=' + JSON.stringify(window.allInputData) + '&outputdata=' + JSON.stringify(window.allOutputData) + auth,
+                        type:'GET',
+                        success : function(data){
+                            var resJson = JSON.parse(data);
+                            if(resJson.result == 'suc')
+                            {
+                                window.location.href = '/public/modelserrun/' + resJson.data;
+                            }
+                            else{
+                                $.gritter.add({
+                                    // (string | mandatory) the heading of the notification
+                                    title: '调用失败!',
+                                    // (string | mandatory) the text inside the notification
+                                    text: resJson.message
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!-- left side start-->
+<div class="left-side sticky-left-side">
+
+    <!--logo and iconic logo start-->
+    <div class="logo">
+        <a href="/index"><img src="/images/logo.png" alt=""></a>
+    </div>
+
+    <div class="logo-icon text-center">
+        <a href="/index"><img src="/images/logo_icon.png" alt=""></a>
+    </div>
+    <!--logo and iconic logo end-->
+    <div class="left-side-inner">
+        <!-- visible to small devices only -->
+        <div class="visible-xs hidden-sm hidden-md hidden-lg">
+            <div class="media logged-user">
+                <img alt="" src="/images/photos/admin.png" class="media-object">
+                <div class="media-body">
+                    <h4><a href="#"><%=global.LanguageConfig.Heading.Administrator.Title %></a></h4>
+                    <span>"<%=global.LanguageConfig.Heading.Administrator.Signature %>"</span>
+                </div>
+            </div>
+
+            <h5 class="left-nav-title"><%=global.LanguageConfig.Heading.User.Title %></h5>
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li><a href="#"><i class="fa fa-user"></i> <span><%=global.LanguageConfig.Heading.User.Info %></span></a></li>
+                <li><a href="#"><i class="fa fa-cog"></i> <span><%=global.LanguageConfig.Heading.User.Settings %></span></a></li>
+                <li><a href="#"><i class="fa fa-sign-out"></i> <span><%=global.LanguageConfig.Heading.User.SignOut %></span></a></li>
+            </ul>
+        </div>
+
+        <!--sidebar nav start-->
+        <ul class="nav nav-pills nav-stacked custom-nav">
+            <li>
+                <a href="/index">
+                    <i class="fa fa-home"></i>
+                    <span><%=global.LanguageConfig.Heading.Homepage %></span>
+                </a>
+            </li>
+            <li class="menu-list
+            <% if(typeof blmodelser !== 'undefined'){%>
+            nav-active
+            <%} %>
+            ">
+                <a href="/modelSer/all"><i class="fa fa-tasks"></i> <span><%=global.LanguageConfig.Heading.LocalModelService.Title %></span></a>
+                <ul class="sub-menu-list">
+                    <li><a href="/modelser/all"><%=global.LanguageConfig.Heading.LocalModelService.Items %></a></li>
+                    <li><a href="/modelins/all"><%=global.LanguageConfig.Heading.LocalModelService.Instances %></a></li>
+                    <li><a href="/modelserrun/all"><%=global.LanguageConfig.Heading.LocalModelService.Records %></a></li>
+                    <li><a href="/modelser/new"><%=global.LanguageConfig.Heading.LocalModelService.Deployment %></a></li>
+                </ul>
+            </li>
+            <li><a href="/note"><i class="fa fa-envelope"></i> <span><%=global.LanguageConfig.Heading.Notice %></span></a></li>
+            <li><a href="/geodata/all"><i class="fa fa-folder"></i> <span><%=global.LanguageConfig.Heading.DataCache %></span></a></li>
+            <li id="setting-li" class="menu-list">
+                <a href="/setting">
+                    <i class="fa fa-cogs"></i>
+                    <span><%=global.LanguageConfig.Heading.Settings.Title %></span>
+                </a>
+                <ul class="sub-menu-list">
+                    <li><a href="/setting"><%=global.LanguageConfig.Heading.Settings.Information %></a></li>
+                    <li><a href="/setting/enviroment"><%=global.LanguageConfig.Heading.Settings.Environment %></a></li>
+                </ul>
+            </li>
+            <!-- <li id="related-li" class="menu-list  <% if(typeof blmodelser_r !== 'undefined'){%>nav-active<%} %>">
+                <a href="#">
+                    <i class="fa fa-file-text"></i>
+                    <span><%=global.LanguageConfig.Heading.RelatedResources.Title %></span>
+                </a>
+                <ul class="sub-menu-list">
+                    <li><a href="/dataVisualize/all"><%=global.LanguageConfig.Heading.RelatedResources.Visualization %></a></li>
+                </ul>
+            </li> -->
+        </ul>
+        <!--sidebar nav end-->
+    </div>
+</div>
+<!-- left side end-->

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%=global.LanguageConfig.Name %></title>
+        <%- include headInclude.ejs %>
+        <style>
+            .main-content{
+                position: absolute;
+                top:0;
+                bottom:0;
+                left:0;
+                right:0;
+            }
+        </style>
+    </head>
+    <body class="sticky-header">
+        <section>
+        <!-- 左导航栏 -->
+        <%- include header.ejs %>
+        <div class="main-content">
+            <!-- 上导航栏 -->
+            <%- include nav.ejs %>
+
+            <div style="min-height: 600px">
+                <!--<div class="wrapper">-->
+                            <section class="panel">
+                                <header class="panel-heading" style="background: #D1D5E1;border-bottom: none;opacity:0.8;">
+                                    <h3 style="margin: 0;"><%=global.LanguageConfig.Homepage.Welcome %></h3>
+                                </header>
+                                <div class="panel-body" id="panel-body">
+                                    <div id="gallery" class="media-gal">
+                                        <div class="images item " id="image1">
+                                            <a href="/modelser/all" data-toggle="modal">
+                                                <img class="gallery-img" src="images/gallery/items.png" alt="" />
+                                            </a>
+                                            <div>
+                                                <a href="/modelser/all">Model Service Items</a>
+                                            </div>
+                                        </div>
+                                        <div class="images item " id="image2">
+                                            <a href="/note" data-toggle="modal">
+                                                <img class="gallery-img" src="images/gallery/notice.png" alt="" />
+                                            </a>
+                                            <div>
+                                                <a href="/note">Notice</a>
+                                            </div>
+                                        </div>
+                                        <div class="images item " id="image3">
+                                            <a href="/status" data-toggle="modal">
+                                                <img class="gallery-img" src="images/gallery/info.png" alt="" />
+                                            </a>
+                                            <div>
+                                                <a href="/status">Information</a>
+                                            </div>
+                                        </div>
+                                        <div class="images item " id="image4">
+                                            <a href="modelser/new" data-toggle="modal">
+                                                <img class="gallery-img" src="images/gallery/deployment.png" alt="" />
+                                            </a>
+                                            <div>
+                                                <a href="modelser/new"><%=global.LanguageConfig.Homepage.Deployment %></a>
+                                            </div>
+                                        </div>
+                                        <div class="images item " id="image5">
+                                            <a href="/modelserrun/all" data-toggle="modal">
+                                                <img class="gallery-img" src="images/gallery/records.png" alt="" />
+                                            </a>
+                                            <div>
+                                                <a href="/modelserrun/all">Records</a>
+                                            </div>
+                                        </div>
+                                        <div class="images item " id="image6">
+                                            <a href="/child-node/all" data-toggle="modal">
+                                                <img class="gallery-img" src="images/gallery/network.png" alt="" />
+                                            </a>
+                                            <div>
+                                                <a href="/child-node/all">Network</a>
+                                            </div>
+                                        </div>
+                                        <div class="images item " id="image7">
+                                            <a href="/child-node/all" data-toggle="modal">
+                                                <img class="gallery-img" src="images/gallery/data.png" alt="" />
+                                            </a>
+                                            <div>
+                                                <a href="/geodata/all">Data Cache</a>
+                                            </div>
+                                        </div>
+                                        <div class="images item " id="image8">
+                                            <a href="/child-node/all" data-toggle="modal">
+                                                <img class="gallery-img" src="images/gallery/help.png" alt="" />
+                                            </a>
+                                            <div>
+                                                <a href="/help.html">Help</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                <!--</div>-->
+            </div>
+            <!-- <div id="checkServerIP"></div> -->
+
+            <%- include footer.ejs %>
+        </div>
+    </section>
+        <%- include footerInclude.ejs %>
+        <!-- <script type="text/javascript" src="/js/output/bundle.js"></script> -->
+        <!--加载动画-->
+        <script src="/js/jquery.isotope.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                var $container = $('#gallery');
+                $container.isotope({
+                    itemSelector: '.item',
+                    animationOptions: {
+                        duration: 750,
+                        easing: 'linear',
+                        queue: false
+                    }
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            var width = ($("#panel-body").width() - 25*4)/3;
+            var height = 254/339*width;
+            width += "px";
+            height += "px";
+            $(".item").css({
+                "width":256,
+                "height":256
+            });
+            $(".item img").css({
+                "width":"100%",
+                "height":"100%"
+            });
+        </script>
+    </body>
+</html>
